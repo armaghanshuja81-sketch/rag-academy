@@ -3,7 +3,6 @@ RAG Engine — Professional RAG implementation with ChromaDB support.
 """
 import re
 import json
-import numpy as np
 
 class SimpleRAGEngine:
     """Keyword-based RAG engine (works without any API keys)."""
