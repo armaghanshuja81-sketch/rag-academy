@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}RAG Concepts - RAG Academy{% endblock %}
+{% block content %}
+<div class="container lesson-content">
+    <div class="lesson-header">
+        <a href="{{ url_for('lessons') }}" class="btn btn-sm btn-secondary">← Back</a>
+        <h1>🤖 Retrieval-Augmented Generation (RAG) Explained</h1>
+        <p class="text-muted">The most important AI architecture you'll learn. This is what companies are hiring for.</p>
+    </div>
+
+    <div class="card mb-2">
+        <h3>The Problem RAG Solves</h3>
+        <p>LLMs (ChatGPT, Claude, Gemini) are trained on public internet data. They DON'T know:</p>
+        <ul>
+            <li>Your company's internal documents</li>
+            <li>Your private research papers</li>
+            <li>Recently published information</li>
+            <li>Your personal data</li>
+        </ul>
+        <p><strong>RAG solves this</strong> by letting the LLM look up information from YOUR documents before answering.</p>
+    </div>
+
+    <div class="card mb-2" style="border-color: var(--secondary);">
+        <h3>The 3-Step RAG Process</h3>
+        <div class="grid-3" style="margin-top: 1rem;">
+            <div class="card" style="border-top: 4px solid var(--primary);">
+                <h4>1️⃣ Retrieve</h4>
+                <p style="font-size: 0.9rem;">Search your documents for the most relevant information.</p>
+                <ul style="font-size: 0.85rem;">
+                    <li>Chunk documents into pieces</li>
+                    <li>Convert chunks to embeddings (vectors)</li>
+                    <li>Find chunks similar to the question</li>
+                </ul>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--secondary);">
+                <h4>2️⃣ Augment</h4>
+                <p style="font-size: 0.9rem;">Add the retrieved information to the prompt.</p>
+                <div class="code-block-wrapper" style="margin-top: 0.5rem;">
+                    <pre><code>Prompt sent to LLM:
+
+Context: [YOUR DOCUMENTS]
+Question: [USER QUESTION]
+Answer:</code></pre>
+                </div>
+            </div>
+            <div class="card" style="border-top: 4px solid var(--success);">
+                <h4>3️⃣ Generate</h4>
+                <p style="font-size: 0.9rem;">LLM generates an answer based ONLY on the provided context.</p>
+                <ul style="font-size: 0.85rem;">
+                    <li>LLM reads the context</li>
+                    <li>Answers from your data</li>
+                    <li>Can cite exact sources</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>The Full RAG Pipeline (Code)</h3>
+        <div class="code-block-wrapper">
+            <span class="code-lang">Python</span>
+            <pre><code>def rag_pipeline(question, documents):
+    """Complete RAG system from scratch."""
+
+    # STEP 1: Chunk documents into pieces
+    chunks = split_into_chunks(documents)
+
+    # STEP 2: Generate embeddings for each chunk
+    chunk_embeddings = [embed(chunk) for chunk in chunks]
+
+    # STEP 3: Embed the user's question
+    question_vec = embed(question)
+
+    # STEP 4: Find most similar chunks (cosine similarity)
+    scores = [cosine_similarity(question_vec, ce)
+              for ce in chunk_embeddings]
+    top_indices = argsort(scores)[-3:][::-1]
+    relevant_chunks = [chunks[i] for i in top_indices]
+
+    # STEP 5: Build the augmented prompt
+    context = "\n".join(relevant_chunks)
+    prompt = f"""Answer based ONLY on this context:
+    {context}
+    Question: {question}
+    Answer:"""
+
+    # STEP 6: Generate answer using an LLM
+    answer = llm_generate(prompt)
+
+    return answer  # + citations from relevant_chunks</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>Key RAG Concepts</h3>
+        <div class="grid-2">
+            <div>
+                <h4>🧩 Chunking</h4>
+                <p style="font-size: 0.9rem;">Splitting documents into pieces. 256-1024 tokens per chunk is typical.</p>
+                <p class="text-muted" style="font-size: 0.85rem;">Strategies: character, recursive, semantic</p>
+            </div>
+            <div>
+                <h4>📐 Embeddings</h4>
+                <p style="font-size: 0.9rem;">Converting text to numbers (vectors) that capture meaning.</p>
+                <p class="text-muted" style="font-size: 0.85rem;">"king" - "man" + "woman" ≈ "queen"</p>
+            </div>
+            <div>
+                <h4>📏 Cosine Similarity</h4>
+                <p style="font-size: 0.9rem;">Measures how similar two vectors are (0 to 1).</p>
+                <p class="text-muted" style="font-size: 0.85rem;">1 = identical meaning, 0 = unrelated</p>
+            </div>
+            <div>
+                <h4>🗄️ Vector Database</h4>
+                <p style="font-size: 0.9rem;">Stores embeddings for fast similarity search.</p>
+                <p class="text-muted" style="font-size: 0.85rem;">ChromaDB, FAISS, Pinecone, Qdrant</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-2" style="background: var(--primary-light);">
+        <h3>🔬 See RAG In Action</h3>
+        <p>Visit the <a href="{{ url_for('rag_demo') }}">RAG Demo page</a> to see a working RAG system.</p>
+        <p>Ask questions about sample documents and watch the retrieve → augment → generate flow.</p>
+    </div>
+
+    <div class="card mb-2" style="background: #fef3c7;">
+        <h3>📚 RAG Tools You'll Use</h3>
+        <table>
+            <thead>
+                <tr><th>Tool</th><th>Purpose</th><th>When to Use</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>LangChain</td><td>RAG framework</td><td>Building production RAG quickly</td></tr>
+                <tr><td>ChromaDB</td><td>Vector database</td><td>Local RAG, learning</td></tr>
+                <tr><td>FAISS</td><td>Vector search</td><td>Fast search on static data</td></tr>
+                <tr><td>LlamaIndex</td><td>Data framework</td><td>Complex document pipelines</td></tr>
+                <tr><td>RAGAS</td><td>Evaluation</td><td>Measuring RAG quality</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form action="{{ url_for('mark_complete', lesson_id='rag_concepts') }}" method="POST">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">✅ Mark Complete</button>
+    </form>
+</div>
+{% endblock %}

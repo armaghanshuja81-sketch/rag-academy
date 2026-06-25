@@ -1,0 +1,55 @@
+<h2>The RAG Architecture</h2>
+
+<p>RAG = <strong>Retrieval-Augmented Generation</strong>. It has three steps:</p>
+
+<h3>Step 1: RETRIEVE</h3>
+<p>When a user asks a question, search your documents for relevant information.</p>
+<pre><code>User Question &rarr; Convert to Embedding
+&rarr; Search Vector Database
+&rarr; Find Top 3 Most Relevant Chunks</code></pre>
+
+<h3>Step 2: AUGMENT</h3>
+<p>Add the retrieved information to the prompt sent to the LLM.</p>
+<pre><code>System: Answer based ONLY on this context:
+
+Context:
+--- Chunk 1 ---
+...document text...
+--- Chunk 2 ---
+...more text...
+
+User: What is RAG?</code></pre>
+
+<h3>Step 3: GENERATE</h3>
+<p>The LLM generates an answer using ONLY the provided context.</p>
+<pre><code>LLM Response: "RAG stands for Retrieval-Augmented Generation,
+which is a technique that combines information retrieval
+with text generation..."</code></pre>
+
+<h3>Code (No Frameworks)</h3>
+<pre><code>def rag_pipeline(question, documents):
+    # 1. Chunk documents into pieces
+    chunks = split_into_chunks(documents)
+
+    # 2. Embed all chunks and the question
+    chunk_vecs = [embed(c) for c in chunks]
+    question_vec = embed(question)
+
+    # 3. Find most similar chunks
+    similar = find_top_k(question_vec, chunk_vecs, k=3)
+
+    # 4. Build prompt with context
+    context = "\n".join(similar)
+    prompt = f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
+
+    # 5. Get answer from LLM
+    answer = llm_generate(prompt)
+    return answer</code></pre>
+
+<div class="alert alert-info"><strong>Try it:</strong> Visit the <a href="/rag-demo">RAG Demo</a> page to see a working RAG system!</div>
+
+<h3>Resources</h3>
+<ul>
+<li><strong>Video:</strong> Sam Witteveen - "RAG Explained" (YouTube)</li>
+<li><strong>Video:</strong> LangChain - "RAG from Scratch" playlist (YouTube)</li>
+</ul>

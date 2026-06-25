@@ -1,0 +1,13 @@
+<h2>File I/O</h2><p>Read and write files.</p><pre><code># Reading
+with open("file.txt", "r") as f:
+    content = f.read()
+
+# Writing
+with open("output.txt", "w") as f:
+    f.write("Hello!\n")
+
+# JSON
+import json
+data = {"name": "Armaghan"}
+with open("data.json", "w") as f:
+    json.dump(data, f)</code></pre>

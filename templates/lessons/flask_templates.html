@@ -1,0 +1,7 @@
+<h2>Jinja2 Templates</h2><pre><code># app.py
+return render_template("index.html", name="Armaghan")
+
+&lt;!-- index.html --&gt;
+&lt;h1&gt;Hello, {{ name }}!&lt;/h1&gt;
+{% if age > 18 %}&lt;p&gt;Adult&lt;/p&gt;{% endif %}
+{% for item in list %}&lt;li&gt;{{ item }}&lt;/li&gt;{% endfor %}</code></pre>

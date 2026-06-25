@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Python Playground - RAG Academy{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>🐍 Python Playground</h1>
+        <p>Write Python code and run it directly in your browser. Experiment freely — this is a sandbox.</p>
+    </div>
+
+    <div class="grid-2 mb-2">
+        <div class="card">
+            <h4>📖 How To Use</h4>
+            <ol style="font-size: 0.9rem; padding-left: 1.25rem;">
+                <li>Type or paste Python code in the editor</li>
+                <li>Click <strong>Run Code</strong> to execute it</li>
+                <li>See the output on the right panel</li>
+                <li>Use the <strong>Examples</strong> buttons to load sample code</li>
+            </ol>
+            <p class="text-muted mt-2" style="font-size: 0.85rem;">
+                Available: print(), variables, loops, functions, lists, dicts, math.<br>
+                Not available: file I/O, internet access, external libraries.
+            </p>
+        </div>
+        <div class="card" style="background: var(--primary-light);">
+            <h4>⚡ Quick Examples</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                <button class="btn btn-sm btn-secondary" onclick="loadExample('hello')">Hello World</button>
+                <button class="btn btn-sm btn-secondary" onclick="loadExample('variables')">Variables</button>
+                <button class="btn btn-sm btn-secondary" onclick="loadExample('list')">Lists</button>
+                <button class="btn btn-sm btn-secondary" onclick="loadExample('function')">Functions</button>
+            </div>
+            <p class="mt-2" style="font-size: 0.85rem;">
+                <strong>Tip:</strong> Use the code examples from your lessons here to practice!
+            </p>
+        </div>
+    </div>
+
+    <div class="card">
+        <form method="POST">
+            <div class="grid-2" style="gap: 1rem;">
+                <div>
+                    <label for="code"><strong>✏️ Write Python Code:</strong></label>
+                    <textarea id="code" name="code" rows="18" class="form-control"
+                              style="font-family: 'Consolas', monospace; font-size: 0.85rem;"
+                    >{{ code }}</textarea>
+                    <button type="submit" class="btn btn-primary btn-block mt-2">▶ Run Code</button>
+                </div>
+                <div>
+                    <strong>📋 Output:</strong>
+                    <div style="background: #1e1e2e; color: #e4e4e7; padding: 1rem;
+                                border-radius: 8px; min-height: 400px; font-family: 'Consolas', monospace;
+                                font-size: 0.85rem; white-space: pre-wrap; overflow: auto;">
+                        {% if error %}
+                        <span style="color: #f87171;">{{ error }}</span>
+                        {% elif output %}
+                        {{ output }}
+                        {% else %}
+                        <span style="color: #6b7280;">Run some code to see output here...</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+var examples = {{ examples|tojson|safe }};
+
+function loadExample(name) {
+    if (examples[name]) {
+        document.getElementById('code').value = examples[name];
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,11 @@
+<h2>Flask + SQLite Integration</h2><pre><code>def get_db():
+    conn = sqlite3.connect("app.db")
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.route("/history")
+def history():
+    conn = get_db()
+    rows = conn.execute("SELECT * FROM queries").fetchall()
+    conn.close()
+    return render_template("history.html", rows=rows)</code></pre>

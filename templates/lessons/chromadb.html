@@ -1,0 +1,56 @@
+<h2>ChromaDB Fundamentals</h2>
+
+<p>ChromaDB is an <strong>open-source vector database</strong> that runs locally. It stores embeddings and enables semantic search.</p>
+
+<h3>Install &amp; Basic Usage</h3>
+<pre><code># pip install chromadb
+import chromadb
+
+# In-memory (for learning)
+client = chromadb.Client()
+
+# Or persistent (saves to disk)
+client = chromadb.PersistentClient(path="./chroma_data")
+
+# Create a collection (like a table)
+collection = client.create_collection("my_docs")
+
+# Add documents (embeddings auto-generated!)
+collection.add(
+    documents=[
+        "RAG stands for Retrieval-Augmented Generation",
+        "Flask is a Python web framework",
+        "Python is a programming language"
+    ],
+    ids=["doc1", "doc2", "doc3"]
+)
+
+# Search by meaning
+results = collection.query(
+    query_texts=["What is RAG?"],
+    n_results=2
+)
+print(results["documents"])  # Most relevant docs
+print(results["distances"])  # Similarity scores</code></pre>
+
+<h3>Key Features</h3>
+<ul>
+<li>Auto-embedding: No need to generate embeddings yourself</li>
+<li>Persistent storage: Data survives restarts</li>
+<li>Simple API: Easy to learn and use</li>
+<li>Perfect for learning and small-to-medium RAG apps</li>
+</ul>
+
+<h3>Integration with LangChain</h3>
+<pre><code>from langchain_community.vectorstores import Chroma
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
+embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+vectorstore = Chroma.from_documents(documents, embeddings)
+retriever = vectorstore.as_retriever()</code></pre>
+
+<h3>Resources</h3>
+<ul>
+<li><strong>Docs:</strong> docs.trychroma.com</li>
+<li><strong>Video:</strong> Search "ChromaDB tutorial" on YouTube</li>
+</ul>

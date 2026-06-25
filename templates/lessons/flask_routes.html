@@ -1,0 +1,7 @@
+<h2>Routes &amp; Views</h2><pre><code>@app.route("/user/&lt;name&gt;")
+def profile(name):
+    return f"&lt;h1&gt;Welcome, {name}!&lt;/h1&gt;"
+
+@app.route("/post/&lt;int:id&gt;")
+def post(id):
+    return f"Post #{id}"</code></pre>

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Flask Basics - RAG Academy{% endblock %}
+{% block content %}
+<div class="container lesson-content">
+    <div class="lesson-header">
+        <a href="{{ url_for('lessons') }}" class="btn btn-sm btn-secondary">← Back</a>
+        <h1>🐍 Flask: The Python Web Framework</h1>
+        <p class="text-muted">Flask turns Python code into a web server. It handles HTTP requests and returns HTML responses.</p>
+    </div>
+
+    <div class="card mb-2">
+        <h3>What is Flask?</h3>
+        <p>Flask is a <strong>micro web framework</strong> for Python. It lets you write web apps using Python.</p>
+        <ul>
+            <li><strong>Route</strong> — A URL path like <code>/</code> or <code>/about</code></li>
+            <li><strong>View function</strong> — A Python function that runs when someone visits a route</li>
+            <li><strong>Template</strong> — An HTML file with Jinja2 placeholders (<code>{% raw %}{{ var }}{% endraw %}</code>)</li>
+        </ul>
+    </div>
+
+    <div class="card mb-2">
+        <h3>The Minimal Flask App</h3>
+        <div class="code-block-wrapper">
+            <span class="code-lang">Python</span>
+            <pre><code>from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")          # When someone visits http://localhost:5000/
+def home():              # This function runs
+    return "Hello!"      # This text is sent to the browser
+
+if __name__ == "__main__":
+    app.run(debug=True)  # Start the server</code></pre>
+        </div>
+        <p class="mt-2">Run with: <code>python app.py</code> → Visit <code>http://localhost:5000</code></p>
+    </div>
+
+    <div class="card mb-2">
+        <h3>How Flask Receives Form Data</h3>
+        <p>This is the critical connection — how HTML forms talk to Python:</p>
+        <div class="code-block-wrapper">
+            <pre><code>from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+@app.route("/ask", methods=["GET", "POST"])
+def ask():
+    if request.method == "POST":
+        # Get data sent from HTML form
+        user_question = request.form["question"]
+        # ↑ This "question" must match name="question" in HTML!
+
+        # Do something with the data
+        answer = f"You asked: {user_question}"
+
+        # Send result back to browser
+        return render_template("result.html",
+                             question=user_question,
+                             answer=answer)
+
+    # GET request: just show the form
+    return render_template("ask.html")</code></pre>
+        </div>
+        <div class="alert alert-warning mt-2">
+            <strong>⚠️ Common Mistake:</strong> If your HTML form has <code>method="POST"</code>
+            but your Flask route only has <code>@app.route("/ask")</code> (no methods),
+            you'll get a <strong>405 Method Not Allowed</strong> error. Always add
+            <code>methods=["GET", "POST"]</code> when handling forms.
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>Template Variables (Jinja2)</h3>
+        <p>Flask uses Jinja2 to embed Python variables in HTML:</p>
+        <div class="code-block-wrapper">
+            <pre><code>{# templates/result.html #}
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Result&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Your Question: {% raw %}{{ question }}{% endraw %}&lt;/h1&gt;
+    &lt;p&gt;Answer: {% raw %}{{ answer }}{% endraw %}&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+        <p>The <code>{% raw %}{{ }}{% endraw %}</code> syntax prints Python variables as text in your HTML.</p>
+    </div>
+
+    <div class="card mb-2" style="background: var(--primary-light);">
+        <h3>🔬 See It In Action</h3>
+        <p>This entire app IS a Flask app! Every page you visit follows this pattern:</p>
+        <ol>
+            <li>You click a link or submit a form</li>
+            <li>Browser sends HTTP request to Flask</li>
+            <li>Flask's route function runs</li>
+            <li>Flask renders an HTML template with data</li>
+            <li>You see the rendered page</li>
+        </ol>
+        <p class="mt-2"><strong>Open <code>app.py</code></strong> — every route is documented with comments!</p>
+    </div>
+
+    <form action="{{ url_for('mark_complete', lesson_id='flask_basics') }}" method="POST">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">✅ Mark Complete</button>
+    </form>
+</div>
+{% endblock %}

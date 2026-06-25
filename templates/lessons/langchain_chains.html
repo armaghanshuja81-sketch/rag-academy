@@ -1,0 +1,9 @@
+<h2>Chains &amp; RetrievalQA</h2><pre><code>qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=vectorstore.as_retriever(search_kwargs={"k": 3}),
+    return_source_documents=True
+)
+
+result = qa_chain.invoke({"query": "What is RAG?"})
+print(result["result"])  # Answer
+print(result["source_documents"])  # Sources used</code></pre>

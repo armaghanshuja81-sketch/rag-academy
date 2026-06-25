@@ -1,0 +1,36 @@
+<h2>HTML Forms &amp; Data Flow</h2>
+
+<p><strong>Forms are how data gets from your browser to your server.</strong> This is the most important HTML concept for backend developers.</p>
+
+<h3>The Critical Attributes</h3>
+<pre><code>&lt;form action="/submit" method="POST"&gt;
+    &lt;!-- action: WHERE to send (Flask route URL)
+         method: HOW to send (GET or POST) --&gt;
+
+    &lt;label for="username"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="username" name="username"&gt;
+    &lt;!-- ^^ name="username" is THE CONNECTION to Python!
+         Flask reads: request.form["username"] --&gt;
+
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+
+<h3>Input Types</h3>
+<pre><code>&lt;input type="text"&gt;     &lt;!-- Single line text --&gt;
+&lt;input type="email"&gt;    &lt;!-- Email validation --&gt;
+&lt;input type="password"&gt; &lt;!-- Hidden text --&gt;
+&lt;input type="number"&gt;   &lt;!-- Numbers only --&gt;
+&lt;input type="file"&gt;     &lt;!-- File upload --&gt;
+&lt;textarea&gt;&lt;/textarea&gt;   &lt;!-- Multi-line text --&gt;
+&lt;select&gt;                &lt;!-- Dropdown --&gt;
+    &lt;option value="1"&gt;One&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+<h3>Flask Side</h3>
+<pre><code>@app.route("/submit", methods=["POST"])
+def submit():
+    username = request.form["username"]
+    uploaded_file = request.files.get("file")
+    return f"Received: {username}"</code></pre>
+
+<div class="alert alert-warning"><strong>KEY INSIGHT:</strong> The <code>name=""</code> in HTML and <code>request.form[""]</code> in Flask <strong>MUST match exactly</strong>. This is the data bridge between frontend and backend.</div>

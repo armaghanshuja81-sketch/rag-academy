@@ -1,0 +1,32 @@
+<h2>Complete RAG Pipeline</h2><pre><code>class RAGPipeline:
+    def __init__(self, api_key):
+        self.client = genai.Client(api_key=api_key)
+        self.documents = []
+
+    def add_document(self, text):
+        chunks = self.chunk_text(text)
+        for chunk in chunks:
+            resp = self.client.models.embed_content(
+                model="models/text-embedding-004", content=chunk)
+            self.documents.append({
+                "text": chunk,
+                "embedding": resp.embeddings[0].values
+            })
+
+    def ask(self, question):
+        # Embed question
+        q_resp = self.client.models.embed_content(
+            model="models/text-embedding-004", content=question)
+        q_vec = q_resp.embeddings[0].values
+
+        # Find most similar chunks
+        scores = [np.dot(q_vec, d["embedding"]) for d in self.documents]
+        indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:3]
+        context = "\n".join([self.documents[i]["text"] for i in indices])
+
+        # Generate answer
+        response = self.client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
+        )
+        return response.text</code></pre>

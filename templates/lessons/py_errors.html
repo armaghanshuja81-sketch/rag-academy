@@ -1,0 +1,8 @@
+<h2>Exception Handling</h2><p>Handle errors gracefully.</p><pre><code>try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Can't divide by zero!")
+except Exception as e:
+    print(f"Error: {e}")
+finally:
+    print("Always runs")</code></pre>

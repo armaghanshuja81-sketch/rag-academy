@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}HTML Basics - RAG Academy{% endblock %}
+{% block content %}
+<div class="container lesson-content">
+    <div class="lesson-header">
+        <a href="{{ url_for('lessons') }}" class="btn btn-sm btn-secondary">← Back</a>
+        <h1>📝 HTML Basics: The Language of the Web</h1>
+        <p class="text-muted">HTML is the foundation of every webpage. It structures content using "tags".</p>
+    </div>
+
+    <div class="card mb-2">
+        <h3>What is HTML?</h3>
+        <p>HTML = <strong>H</strong>yper<strong>T</strong>ext <strong>M</strong>arkup <strong>L</strong>anguage.</p>
+        <ul>
+            <li>It's NOT a programming language — it's a <strong>markup</strong> language</li>
+            <li>It uses <strong>tags</strong> like <code>&lt;h1&gt;</code> and <code>&lt;p&gt;</code> to structure content</li>
+            <li>The browser reads HTML and renders it as a visual page</li>
+        </ul>
+    </div>
+
+    <div class="card mb-2">
+        <h3>Every HTML Page Has This Structure</h3>
+        <div class="code-block-wrapper">
+            <span class="code-lang">HTML</span>
+            <pre><code>&lt;!DOCTYPE html&gt;      &lt;!-- Tells browser: "I'm HTML5" --&gt;
+&lt;html&gt;                &lt;!-- Root element --&gt;
+&lt;head&gt;                &lt;!-- Metadata (not visible) --&gt;
+    &lt;title&gt;My Page&lt;/title&gt;  &lt;!-- Browser tab title --&gt;
+&lt;/head&gt;
+&lt;body&gt;                &lt;!-- Visible content --&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;   &lt;!-- Heading level 1 --&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>The Form Tag — The Most Important One</h3>
+        <p>Forms are how data gets FROM the browser TO the server:</p>
+        <div class="code-block-wrapper">
+            <pre><code>&lt;form action="/submit" method="POST"&gt;
+    &lt;!-- action: WHERE to send data --&gt;
+    &lt;!-- method: HOW to send (GET or POST) --&gt;
+
+    &lt;label for="name"&gt;Name:&lt;/label&gt;
+    &lt;input type="text" id="name" name="username"&gt;
+    &lt;!--  ↑ name="username" is CRITICAL — that's
+    │      how Flask identifies this field!  --&gt;
+
+    &lt;button type="submit"&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+        </div>
+        <div class="alert alert-info mt-2">
+            <strong>KEY INSIGHT:</strong> The <code>name=""</code> attribute is the link between
+            HTML and Python. Flask reads <code>request.form["username"]</code> — that "username"
+            must match the <code>name="username"</code> in your HTML.
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>🔬 Try It Yourself</h3>
+        <p>Visit the <a href="{{ url_for('playground') }}">Code Playground</a> and write HTML live.</p>
+        <p>Or try the <a href="{{ url_for('data_flow') }}">Data Flow page</a> to see how HTML forms connect to Flask.</p>
+    </div>
+
+    <form action="{{ url_for('mark_complete', lesson_id='html_basics') }}" method="POST">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">✅ Mark Complete</button>
+    </form>
+</div>
+{% endblock %}

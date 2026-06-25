@@ -1,0 +1,8 @@
+<h2>JSON &amp; CSV</h2><p>Work with data formats.</p><pre><code>import json, csv
+data = {"name": "Armaghan", "skills": ["Python", "RAG"]}
+json_str = json.dumps(data, indent=2)
+
+with open("data.csv", "r") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row["name"])</code></pre>

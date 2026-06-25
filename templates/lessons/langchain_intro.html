@@ -1,0 +1,10 @@
+<h2>LangChain Overview</h2><p>Industry standard framework for LLM/RAG apps.</p><pre><code>from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.vectorstores import Chroma
+from langchain.chains import RetrievalQA
+
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=vectorstore.as_retriever()
+)
+answer = qa_chain.invoke({"query": "What is RAG?"})</code></pre>

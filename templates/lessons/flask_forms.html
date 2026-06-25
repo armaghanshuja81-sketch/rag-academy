@@ -1,0 +1,5 @@
+<h2>Handling Form Submissions</h2><pre><code>@app.route("/submit", methods=["POST"])
+def submit():
+    name = request.form["username"]
+    email = request.form["email"]
+    return f"Thanks, {name}!"</code></pre><p>The name="" attribute in HTML MUST match request.form[""] in Flask.</p>

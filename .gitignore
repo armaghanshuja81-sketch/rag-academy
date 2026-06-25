@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.py~
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Database
+rag_academy.db
+*.db
+*.sqlite3
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+uploads/
+chroma_data/
+
+# Temp
+backups/

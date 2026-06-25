@@ -1,0 +1,38 @@
+<h2>What is Flask?</h2>
+
+<p>Flask is a <strong>lightweight Python web framework</strong>. It turns your Python code into a web server.</p>
+
+<h3>The Minimal Flask App</h3>
+<pre><code>from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, World!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+# Run: python app.py
+# Open: http://localhost:5000</code></pre>
+
+<h3>How It Works</h3>
+<ol>
+<li>You write Python functions</li>
+<li>You attach them to URLs with <code>@app.route()</code></li>
+<li>When someone visits that URL, Flask runs your function</li>
+<li>Your function returns HTML/text to the browser</li>
+</ol>
+
+<h3>Routes Map to URLs</h3>
+<pre><code>@app.route("/")         # http://localhost:5000/
+@app.route("/about")    # http://localhost:5000/about
+@app.route("/user/&lt;name&gt;")  # Dynamic: /user/Armaghan</code></pre>
+
+<div class="alert alert-info"><strong>This entire app IS a Flask app!</strong> Every page you visit follows this pattern: URL &rarr; route &rarr; function &rarr; HTML template &rarr; response.</div>
+
+<h3>Resources</h3>
+<ul>
+<li><strong>Video:</strong> Corey Schafer Flask Tutorial (YouTube, full playlist)</li>
+<li><strong>Docs:</strong> flask.palletsprojects.com</li>
+</ul>

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Database Basics - RAG Academy{% endblock %}
+{% block content %}
+<div class="container lesson-content">
+    <div class="lesson-header">
+        <a href="{{ url_for('lessons') }}" class="btn btn-sm btn-secondary">← Back</a>
+        <h1>🗄️ Relational Databases & SQL</h1>
+        <p class="text-muted">Databases store your app's data permanently. SQL is the language you use to talk to them.</p>
+    </div>
+
+    <div class="card mb-2">
+        <h3>What is a Relational Database?</h3>
+        <p>Think of it as a set of <strong>Excel spreadsheets</strong> that your app can read and write programmatically.</p>
+        <ul>
+            <li><strong>Table</strong> — Like a spreadsheet tab (e.g., "Users" table, "Orders" table)</li>
+            <li><strong>Row</strong> — A single record (e.g., one user's data)</li>
+            <li><strong>Column</strong> — A field (e.g., name, email, age)</li>
+            <li><strong>Primary Key</strong> — A unique ID for each row (usually <code>id</code>)</li>
+            <li><strong>Foreign Key</strong> — Links rows across tables (e.g., order.user_id → users.id)</li>
+        </ul>
+    </div>
+
+    <div class="card mb-2">
+        <h3>The 4 SQL Operations (CRUD)</h3>
+        <p>Every database operation is one of these four:</p>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+            <div class="card" style="background: #ecfdf5;">
+                <h4>📝 CREATE (INSERT)</h4>
+                <pre><code>INSERT INTO users (name, email)
+VALUES ('Armaghan', 'a@b.com');</code></pre>
+            </div>
+            <div class="card" style="background: var(--primary-light);">
+                <h4>📖 READ (SELECT)</h4>
+                <pre><code>SELECT * FROM users
+WHERE email = 'a@b.com';</code></pre>
+            </div>
+            <div class="card" style="background: #fef3c7;">
+                <h4>✏️ UPDATE</h4>
+                <pre><code>UPDATE users SET name = 'New'
+WHERE id = 1;</code></pre>
+            </div>
+            <div class="card" style="background: #fef2f2;">
+                <h4>🗑️ DELETE</h4>
+                <pre><code>DELETE FROM users
+WHERE id = 1;</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>SQLite vs PostgreSQL</h3>
+        <table>
+            <thead>
+                <tr><th>SQLite (Learning)</th><th>PostgreSQL (Production)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Single file on disk</td><td>Runs as a server</td></tr>
+                <tr><td>Built into Python</td><td>Need to install & configure</td></tr>
+                <tr><td>One user at a time</td><td>Thousands of concurrent users</td></tr>
+                <tr><td>Great for learning & dev</td><td>Used in real applications</td></tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info mt-2">
+            <strong>KEY INSIGHT:</strong> The SQL is almost IDENTICAL. Switch from SQLite to PostgreSQL
+            by changing only the connection code. All your queries stay the same.
+        </div>
+    </div>
+
+    <div class="card mb-2">
+        <h3>Flask + SQLite Example</h3>
+        <div class="code-block-wrapper">
+            <span class="code-lang">Python</span>
+            <pre><code>import sqlite3
+
+# Connect (creates file if not exists)
+conn = sqlite3.connect("myapp.db")
+cursor = conn.cursor()
+
+# Create table
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE
+    )
+""")
+conn.commit()
+
+# Insert data (⚠️ ALWAYS use ? placeholders!)
+cursor.execute(
+    "INSERT INTO users (name, email) VALUES (?, ?)",
+    ("Armaghan", "armaghan@email.com")
+)
+conn.commit()
+
+# Query data
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+
+# Close
+conn.close()</code></pre>
+        </div>
+        <div class="alert alert-danger mt-2">
+            <strong>🚨 SECURITY: NEVER do this!</strong><br>
+            <code>f"INSERT INTO users VALUES ('{user_input}')"</code> ← SQL injection!
+            <br>Always use <code>? </code> placeholders!
+        </div>
+    </div>
+
+    <div class="card mb-2" style="background: var(--primary-light);">
+        <h3>🔬 See It In Action</h3>
+        <p>Visit the <a href="{{ url_for('database_viewer') }}">Database Viewer</a> page to:</p>
+        <ul>
+            <li>See the actual SQLite database running this app</li>
+            <li>Run your own SQL queries</li>
+            <li>See how lesson progress is stored</li>
+            <li>Watch data persist across page reloads</li>
+        </ul>
+    </div>
+
+    <form action="{{ url_for('mark_complete', lesson_id='database_basics') }}" method="POST">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">✅ Mark Complete</button>
+    </form>
+</div>
+{% endblock %}
