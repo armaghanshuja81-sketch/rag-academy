@@ -17,10 +17,10 @@
 {% block title %}Database Viewer - RAG Academy{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="page-header">
+<div class="clay-container">
+    <div class="clay-text-center clay-mb-lg">
         <h1>🗄️ Database Viewer</h1>
-        <p>
+        <p class="clay-text-muted">
             This page shows you the <strong>actual SQLite database</strong> that powers this app.
             Every lesson completion, every user action — it's all stored here.
             <strong>This is the "Database" layer of the full stack.</strong>
@@ -28,33 +28,33 @@
     </div>
 
     <!-- ─── THE LESSON ─── -->
-    <div class="grid-2 mb-2">
-        <div class="card">
+    <div class="clay-grid-2 clay-mb-md">
+        <div class="clay-card">
             <h3>📖 What is a Database?</h3>
-            <p style="font-size: 0.9rem;">
+            <p class="clay-text-sm">
                 A database is like a set of Excel spreadsheets that your app can read and write.
                 Each "table" is like a sheet, each "row" is a record, each "column" is a field.
             </p>
-            <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <p class="clay-text-sm clay-mt-md">
                 <strong>This app's database</strong> has these tables:
             </p>
-            <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <ul class="clay-text-sm clay-mt-md">
                 <li><code>lesson_progress</code> — tracks which lessons you've completed</li>
                 <li><code>user_queries</code> — stores RAG demo questions</li>
                 <li><code>database_lessons</code> — sample data for learning SQL</li>
             </ul>
         </div>
-        <div class="card">
+        <div class="clay-card">
             <h3>🔗 SQLite vs PostgreSQL</h3>
-            <p style="font-size: 0.9rem;">
+            <p class="clay-text-sm">
                 <strong>SQLite</strong> (this app): A file on your computer. Perfect for learning.
                 No server needed. Built into Python.
             </p>
-            <p style="font-size: 0.9rem;">
+            <p class="clay-text-sm">
                 <strong>PostgreSQL</strong> (real apps): A database server. Multiple users can access
                 it at once. Used in production. You'd deploy it on Render, Railway, or Supabase.
             </p>
-            <div class="alert alert-info mt-2">
+            <div class="clay-alert clay-alert--info clay-mt-md">
                 <strong>KEY INSIGHT:</strong> SQL is the SAME for both. Only the connection changes.
                 Learn SQL once, use it everywhere.
             </div>
@@ -63,15 +63,15 @@
 
     <!-- ─── TABLE VIEWER ─── -->
     {% for table_name, table_data in tables.items() %}
-    <div class="card mb-2">
-        <div class="flex items-center justify-between mb-1">
+    <div class="clay-card clay-mb-md">
+        <div class="clay-flex clay-items-center clay-justify-between clay-mb-md">
             <h3>📊 Table: <code>{{ table_name }}</code></h3>
-            <span class="badge badge-purple">{{ table_data.rows|length }} rows</span>
+            <span class="clay-badge clay-badge--neutral">{{ table_data.rows|length }} rows</span>
         </div>
 
         {% if table_data.rows %}
-        <div class="table-container">
-            <table>
+        <div class="clay-table-wrap">
+            <table class="clay-table">
                 <thead>
                     <tr>
                         {% for col in table_data.columns %}
@@ -91,57 +91,53 @@
             </table>
         </div>
         {% else %}
-        <div class="empty-state">
-            <div class="icon">📭</div>
-            <p>This table is empty. Complete some lessons to add data!</p>
+        <div class="clay-text-center clay-text-muted">
+            <p>📭 This table is empty. Complete some lessons to add data!</p>
         </div>
         {% endif %}
     </div>
     {% endfor %}
 
     <!-- ─── SQL QUERY PLAYGROUND ─── -->
-    <div class="card mb-2" style="border-color: var(--success);">
+    <div class="clay-card clay-card--accent clay-mb-md">
         <h3>🔍 Run Your Own SQL Queries</h3>
-        <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 1rem;">
+        <p class="clay-text-muted clay-text-sm clay-mb-md">
             Type any SQL query below and execute it. This is a REAL database.
             <strong>Try these:</strong>
         </p>
 
         <!-- Quick query buttons -->
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-            <button class="btn btn-sm btn-secondary"
+        <div class="clay-flex clay-gap-sm clay-flex-wrap clay-mb-md">
+            <button class="clay-btn clay-btn--ghost clay-btn--sm"
                     onclick="setQuery('SELECT * FROM lesson_progress;')">All Progress</button>
-            <button class="btn btn-sm btn-secondary"
+            <button class="clay-btn clay-btn--ghost clay-btn--sm"
                     onclick="setQuery('SELECT * FROM user_queries ORDER BY created_at DESC;')">Recent Queries</button>
-            <button class="btn btn-sm btn-secondary"
+            <button class="clay-btn clay-btn--ghost clay-btn--sm"
                     onclick="setQuery('SELECT COUNT(*) as total_lessons FROM lesson_progress WHERE completed = 1;')">Completed Count</button>
-            <button class="btn btn-sm btn-secondary"
+            <button class="clay-btn clay-btn--ghost clay-btn--sm"
                     onclick="setQuery("SELECT name FROM sqlite_master WHERE type='table';")">List Tables</button>
         </div>
 
         <form method="POST" action="{{ url_for('run_query') }}">
-            <div class="form-group">
-                <label for="sql-query">SQL Query:</label>
-                <textarea id="sql-query" name="query" class="form-control"
-                          style="font-family: var(--font-mono); min-height: 80px;"
-                          placeholder="Write your SQL query here...">SELECT * FROM lesson_progress;</textarea>
-            </div>
-            <button type="submit" class="btn btn-success">▶ Run Query</button>
+            <label class="clay-label" for="sql-query">SQL Query:</label>
+            <textarea id="sql-query" name="query" class="clay-textarea"
+                      placeholder="Write your SQL query here...">SELECT * FROM lesson_progress;</textarea>
+            <button type="submit" class="clay-btn clay-btn--success clay-mt-md">▶ Run Query</button>
         </form>
 
         {% if query_result is not none %}
-        <hr style="margin: 1rem 0;">
+        <hr>
         <h4>📋 Query Results</h4>
         {% if query_result.error %}
-        <div class="alert alert-danger">
+        <div class="clay-alert clay-alert--error">
             <strong>SQL Error:</strong> {{ query_result.error }}
         </div>
         {% else %}
-        <p class="text-muted" style="font-size: 0.85rem;">
+        <p class="clay-text-muted clay-text-xs">
             Returned {{ query_result.rows|length }} rows in {{ '%.4f' % query_result.time }}s
         </p>
-        <div class="table-container">
-            <table>
+        <div class="clay-table-wrap">
+            <table class="clay-table">
                 <thead>
                     <tr>
                         {% for col in query_result.columns %}
@@ -158,7 +154,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="{{ query_result.columns|length }}" style="text-align: center; color: var(--text-light);">
+                        <td colspan="{{ query_result.columns|length }}" class="clay-text-center clay-text-muted">
                             Query executed successfully. No rows returned.
                         </td>
                     </tr>
@@ -171,12 +167,11 @@
     </div>
 
     <!-- ─── THE SQL CODE EXPLANATION ─── -->
-    <div class="card">
+    <div class="clay-card">
         <h3>🔬 What Just Happened?</h3>
         <p>When you clicked "Run Query", this happened:</p>
-        <div class="code-block-wrapper">
-            <span class="code-lang">Python (Flask)</span>
-            <button class="copy-btn">Copy</button>
+        <div class="clay-code-block">
+            <button class="clay-code-block__copy">Copy</button>
             <pre><code># 1. Flask receives your SQL query from the form
 query = request.form['query']
 
@@ -208,7 +203,7 @@ return render_template('database_viewer.html',
         'time': elapsed
     })</code></pre>
         </div>
-        <p class="mt-2">
+        <p class="clay-mt-md">
             <strong>This is the complete data flow:</strong>
             Your query → HTTP POST → Flask route → SQLite query → Results → HTML response → You see the table.
         </p>

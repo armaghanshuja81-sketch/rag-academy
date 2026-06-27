@@ -15,10 +15,10 @@
 {% block title %}RAG Demo - RAG Academy{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="page-header text-center">
+<div class="clay-container">
+    <div class="clay-text-center clay-mb-lg">
         <h1>🤖 RAG Demo — See It Work</h1>
-        <p>
+        <p class="clay-text-muted">
             <strong>RAG = Retrieval-Augmented Generation.</strong>
             Ask a question about our sample documents. The system will:
             (1) Search for relevant info, (2) Show you what it found,
@@ -27,31 +27,31 @@
     </div>
 
     <!-- ─── THE LESSON ─── -->
-    <div class="grid-2 mb-2">
-        <div class="card">
+    <div class="clay-grid-2 clay-mb-md">
+        <div class="clay-card">
             <h3>📖 What is RAG?</h3>
-            <p style="font-size: 0.9rem;">
+            <p class="clay-text-sm">
                 LLMs (like ChatGPT) only know what they were trained on. If you ask about YOUR
                 company's documents, it doesn't know the answer.
             </p>
-            <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <p class="clay-text-sm clay-mt-md">
                 <strong>RAG solves this:</strong>
             </p>
-            <ol style="font-size: 0.9rem; margin-top: 0.5rem; padding-left: 1.25rem;">
+            <ol class="clay-text-sm clay-mt-md">
                 <li><strong>Retrieve:</strong> Search your documents for relevant info</li>
                 <li><strong>Augment:</strong> Add that info to the prompt</li>
                 <li><strong>Generate:</strong> LLM answers using your document's content</li>
             </ol>
         </div>
-        <div class="card" style="background: var(--primary-light);">
+        <div class="clay-card clay-card--inset">
             <h3>📄 Sample Documents</h3>
-            <p style="font-size: 0.9rem;">This demo has the following documents loaded:</p>
-            <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+            <p class="clay-text-sm">This demo has the following documents loaded:</p>
+            <ul class="clay-text-sm clay-mt-md">
                 {% for doc in documents %}
                 <li><strong>{{ doc.title }}</strong> — {{ doc.topic }}</li>
                 {% endfor %}
             </ul>
-            <p class="text-muted mt-2" style="font-size: 0.85rem;">
+            <p class="clay-text-muted clay-text-xs clay-mt-md">
                 <strong>Chunks:</strong> Each document is split into small pieces so we can
                 find the most relevant section. This is called <strong>chunking</strong>.
             </p>
@@ -59,30 +59,27 @@
     </div>
 
     <!-- ─── THE RAG QUERY FORM ─── -->
-    <div class="card mb-2">
+    <div class="clay-card clay-mb-md">
         <form method="POST" action="{{ url_for('rag_demo') }}">
-            <div class="form-group">
-                <label for="rag-query"><strong>Ask a question about the documents:</strong></label>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="text" id="rag-query" name="query" class="form-control"
-                           placeholder="e.g., What is Flask? How does RAG work? What is HTML?"
-                           value="{{ query or '' }}"
-                           style="font-size: 1.1rem;">
-                    <button type="submit" class="btn btn-primary btn-lg">🔍 Search</button>
-                </div>
+            <label class="clay-label" for="rag-query">Ask a question about the documents:</label>
+            <div class="clay-flex clay-gap-md">
+                <input type="text" id="rag-query" name="query" class="clay-input clay-w-full"
+                       placeholder="e.g., What is Flask? How does RAG work? What is HTML?"
+                       value="{{ query or '' }}">
+                <button type="submit" class="clay-btn clay-btn--primary clay-btn--lg">🔍 Search</button>
             </div>
 
             <!-- Quick question buttons -->
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button type="button" class="btn btn-sm btn-secondary"
+            <div class="clay-flex clay-gap-sm clay-flex-wrap clay-mt-md">
+                <button type="button" class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="setQuery('What is Flask?')">What is Flask?</button>
-                <button type="button" class="btn btn-sm btn-secondary"
+                <button type="button" class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="setQuery('How does RAG work?')">How does RAG work?</button>
-                <button type="button" class="btn btn-sm btn-secondary"
+                <button type="button" class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="setQuery('What is HTML?')">What is HTML?</button>
-                <button type="button" class="btn btn-sm btn-secondary"
+                <button type="button" class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="setQuery('How do databases work?')">How do databases work?</button>
-                <button type="button" class="btn btn-sm btn-secondary"
+                <button type="button" class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="setQuery('What is CSS Flexbox?')">What is CSS Flexbox?</button>
             </div>
         </form>
@@ -90,64 +87,62 @@
 
     {% if result %}
     <!-- ─── RESULTS ─── -->
-    <div class="results-section">
-        <!-- Step 1: Retrieved Chunks -->
-        <div class="card mb-2" style="border-color: var(--secondary);">
-            <div class="flex items-center justify-between mb-1">
-                <h3>🔍 Step 1: Retrieved Chunks</h3>
-                <span class="badge badge-purple">Top {{ result.chunks|length }} matches</span>
-            </div>
-            <p class="text-muted" style="font-size: 0.9rem;">
-                These are the most relevant document sections found by searching for "{{ query }}".
-                Each has a <strong>relevance score</strong> (0 = no match, 1 = perfect match).
-                In a real system, this score comes from <strong>cosine similarity</strong> between
-                vector embeddings. Here we use simple keyword matching.
-            </p>
-
-            {% for chunk in result.chunks %}
-            <div class="rag-source">
-                <div class="flex items-center justify-between">
-                    <strong>{{ chunk.doc_title }}</strong>
-                    <span class="badge {% if chunk.score > 0.3 %}badge-green{% else %}badge-orange{% endif %}">
-                        Score: {{ chunk.score }}
-                    </span>
-                </div>
-                <p style="font-size: 0.85rem; margin-top: 0.25rem;">{{ chunk.text }}</p>
-            </div>
-            {% endfor %}
+    <!-- Step 1: Retrieved Chunks -->
+    <div class="clay-card clay-card--warning clay-mb-md">
+        <div class="clay-flex clay-items-center clay-justify-between clay-mb-md">
+            <h3>🔍 Step 1: Retrieved Chunks</h3>
+            <span class="clay-badge clay-badge--neutral">Top {{ result.chunks|length }} matches</span>
         </div>
+        <p class="clay-text-muted clay-text-sm">
+            These are the most relevant document sections found by searching for "{{ query }}".
+            Each has a <strong>relevance score</strong> (0 = no match, 1 = perfect match).
+            In a real system, this score comes from <strong>cosine similarity</strong> between
+            vector embeddings. Here we use simple keyword matching.
+        </p>
 
-        <!-- Step 2: Generated Answer -->
-        <div class="card mb-2" style="border-color: var(--success); background: #ecfdf5;">
-            <div class="flex items-center justify-between mb-1">
-                <h3>✨ Step 3: Generated Answer</h3>
-                <span class="badge badge-green">LLM Response</span>
+        {% for chunk in result.chunks %}
+        <div class="clay-rag-source">
+            <div class="clay-flex clay-items-center clay-justify-between">
+                <strong>{{ chunk.doc_title }}</strong>
+                <span class="clay-badge {% if chunk.score > 0.3 %}clay-badge--success{% else %}clay-badge--warning{% endif %}">
+                    Score: {{ chunk.score }}
+                </span>
             </div>
-            <p class="text-muted" style="font-size: 0.9rem;">
-                The retrieved chunks are added to the prompt (Step 2: Augment),
-                then sent to an LLM to generate this answer.
-            </p>
-            <div class="rag-result" style="background: white; border-color: var(--success);">
-                {{ result.answer }}
-            </div>
-            <p class="text-muted mt-2" style="font-size: 0.8rem;">
-                <strong>Note:</strong> In this demo, the "LLM" is a template-based generator.
-                A real RAG system calls OpenAI/Gemini/Claude API at this step.
-                But the architecture is EXACTLY the same.
-            </p>
+            <p class="clay-text-xs clay-mt-sm">{{ chunk.text }}</p>
         </div>
+        {% endfor %}
+    </div>
 
-        <!-- The Prompt that was used -->
-        <div class="card mb-2" style="background: #fef3c7;">
-            <h3>📝 Step 2: The Augmented Prompt</h3>
-            <p class="text-muted" style="font-size: 0.9rem;">
-                This is what gets sent to the LLM. Notice how the retrieved chunks are
-                inserted into the prompt as "context". This is the "Augment" in RAG.
-            </p>
-            <div class="code-block-wrapper">
-                <span class="code-lang">Prompt</span>
-                <button class="copy-btn">Copy</button>
-                <pre><code>You are a helpful assistant. Answer based ONLY on this context:
+    <!-- Step 3: Generated Answer -->
+    <div class="clay-card clay-card--success clay-mb-md">
+        <div class="clay-flex clay-items-center clay-justify-between clay-mb-md">
+            <h3>✨ Step 3: Generated Answer</h3>
+            <span class="clay-badge clay-badge--success">LLM Response</span>
+        </div>
+        <p class="clay-text-muted clay-text-sm">
+            The retrieved chunks are added to the prompt (Step 2: Augment),
+            then sent to an LLM to generate this answer.
+        </p>
+        <div class="clay-rag-result">
+            {{ result.answer }}
+        </div>
+        <p class="clay-text-muted clay-text-xs clay-mt-md">
+            <strong>Note:</strong> In this demo, the "LLM" is a template-based generator.
+            A real RAG system calls OpenAI/Gemini/Claude API at this step.
+            But the architecture is EXACTLY the same.
+        </p>
+    </div>
+
+    <!-- The Prompt that was used -->
+    <div class="clay-card clay-card--warning clay-mb-md">
+        <h3>📝 Step 2: The Augmented Prompt</h3>
+        <p class="clay-text-muted clay-text-sm">
+            This is what gets sent to the LLM. Notice how the retrieved chunks are
+            inserted into the prompt as "context". This is the "Augment" in RAG.
+        </p>
+        <div class="clay-code-block">
+            <button class="clay-code-block__copy">Copy</button>
+            <pre><code>You are a helpful assistant. Answer based ONLY on this context:
 
 Context:
 {% for chunk in result.chunks %}--- From: {{ chunk.doc_title }} ---
@@ -155,27 +150,25 @@ Context:
 
 {% endfor %}Question: {{ query }}
 Answer:</code></pre>
-            </div>
         </div>
     </div>
 
     <!-- ─── THE DATA FLOW ─── -->
-    <div class="card">
+    <div class="clay-card">
         <h3>🔬 The RAG Data Flow (What Just Happened)</h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; justify-content: center;">
-            <div class="flow-box browser active" style="min-width: 80px;">❓ Question</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-box server active" style="min-width: 80px;">🔍 Search</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-box database active" style="min-width: 80px;">📄 Documents</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-box server active" style="min-width: 80px;">📝 Generate</div>
-            <div class="flow-arrow">→</div>
-            <div class="flow-box browser active" style="min-width: 80px;">💬 Answer</div>
+        <div class="clay-flow clay-mt-md">
+            <div class="clay-flow__box clay-flow__box--browser">❓ Question</div>
+            <div class="clay-flow__arrow">→</div>
+            <div class="clay-flow__box clay-flow__box--server">🔍 Search</div>
+            <div class="clay-flow__arrow">→</div>
+            <div class="clay-flow__box clay-flow__box--database">📄 Documents</div>
+            <div class="clay-flow__arrow">→</div>
+            <div class="clay-flow__box clay-flow__box--server">📝 Generate</div>
+            <div class="clay-flow__arrow">→</div>
+            <div class="clay-flow__box clay-flow__box--browser">💬 Answer</div>
         </div>
-        <div class="code-block-wrapper mt-2">
-            <span class="code-lang">Python (Flask Route)</span>
-            <button class="copy-btn">Copy</button>
+        <div class="clay-code-block clay-mt-md">
+            <button class="clay-code-block__copy">Copy</button>
             <pre><code>@app.route('/rag-demo', methods=['GET', 'POST'])
 def rag_demo():
     if request.method == 'POST':
@@ -207,50 +200,52 @@ def rag_demo():
     </div>
 
     {% else %}
-    <!-- ─── EMERGENCY STATE ─── -->
-    <div class="card text-center">
-        <div style="padding: 2rem;">
-            <div style="font-size: 4rem; margin-bottom: 1rem;">🤖</div>
-            <h3>Ask a Question Above!</h3>
-            <p class="text-muted">
-                The RAG system will search through sample documents and generate an answer.
-                Type a question or click one of the quick buttons above.
-            </p>
-            <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem;">
-                <span class="badge badge-blue">1. Retrieve</span>
-                <span style="color: var(--text-light);">→</span>
-                <span class="badge badge-purple">2. Augment</span>
-                <span style="color: var(--text-light);">→</span>
-                <span class="badge badge-green">3. Generate</span>
-            </div>
+    <!-- ─── EMPTY STATE ─── -->
+    <div class="clay-card clay-text-center">
+        <div class="clay-mb-lg">
+            <p class="clay-stat">🤖</p>
+        </div>
+        <h3>Ask a Question Above!</h3>
+        <p class="clay-text-muted">
+            The RAG system will search through sample documents and generate an answer.
+            Type a question or click one of the quick buttons above.
+        </p>
+        <div class="clay-flex clay-gap-sm clay-justify-center clay-mt-md">
+            <span class="clay-badge clay-badge--primary">1. Retrieve</span>
+            <span class="clay-text-muted">→</span>
+            <span class="clay-badge clay-badge--neutral">2. Augment</span>
+            <span class="clay-text-muted">→</span>
+            <span class="clay-badge clay-badge--success">3. Generate</span>
         </div>
     </div>
 
     <!-- Show query history if it exists -->
     {% if recent_queries %}
-    <div class="card mt-2">
+    <div class="clay-card clay-mt-md">
         <h3>📜 Recent Questions (from database)</h3>
-        <p class="text-muted" style="font-size: 0.9rem;">
+        <p class="clay-text-muted clay-text-sm">
             Every question you ask is saved to the database. This is the <code>user_queries</code> table.
         </p>
-        <table>
-            <thead>
-                <tr>
-                    <th>Question</th>
-                    <th>Answer Preview</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for q in recent_queries %}
-                <tr>
-                    <td>{{ q.query[:50] }}{% if q.query|length > 50 %}...{% endif %}</td>
-                    <td>{{ q.answer[:60] }}{% if q.answer|length > 60 %}...{% endif %}</td>
-                    <td>{{ q.created_at }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="clay-table-wrap">
+            <table class="clay-table">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Answer Preview</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for q in recent_queries %}
+                    <tr>
+                        <td>{{ q.query[:50] }}{% if q.query|length > 50 %}...{% endif %}</td>
+                        <td>{{ q.answer[:60] }}{% if q.answer|length > 60 %}...{% endif %}</td>
+                        <td>{{ q.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
     {% endif %}
     {% endif %}

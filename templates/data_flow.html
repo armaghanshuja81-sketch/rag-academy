@@ -12,67 +12,67 @@
 {% block title %}Data Flow Visualizer - RAG Academy{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="page-header text-center">
+<div class="clay-container">
+    <div class="clay-text-center clay-mb-lg">
         <h1>🔄 The Complete Data Flow</h1>
-        <p>
+        <p class="clay-text-muted">
             Watch how data travels from your browser, to the Flask server, to the database,
             and back to your screen. This is THE most important concept in web development.
         </p>
     </div>
 
     <!-- ─── THE LIVING DIAGRAM ─── -->
-    <div class="card mb-2" style="text-align: center;">
+    <div class="clay-card clay-mb-md clay-text-center">
         <h3>📡 Data is flowing RIGHT NOW</h3>
-        <p class="text-muted" style="font-size: 0.9rem;">
+        <p class="clay-text-muted clay-text-sm">
             Watch the boxes light up — this animation shows the path data takes
             when you interact with this app. <strong>Every request you make follows this exact path.</strong>
         </p>
 
-        <div class="flow-diagram" style="margin-top: 1.5rem;">
-            <div class="flow-box browser" id="flow-browser">
+        <div class="clay-flow clay-mt-lg">
+            <div class="clay-flow__box clay-flow__box--browser" id="flow-browser">
                 🌐 Browser
             </div>
             <div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-label">HTTP Request</div>
+                <div class="clay-flow__arrow">→</div>
+                <div class="clay-text-xs">HTTP Request</div>
             </div>
-            <div class="flow-box server" id="flow-flask">
+            <div class="clay-flow__box clay-flow__box--server" id="flow-flask">
                 🐍 Flask
             </div>
             <div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-label">SQL Query</div>
+                <div class="clay-flow__arrow">→</div>
+                <div class="clay-text-xs">SQL Query</div>
             </div>
-            <div class="flow-box database" id="flow-db">
+            <div class="clay-flow__box clay-flow__box--database" id="flow-db">
                 🗄️ Database
             </div>
             <div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-label">Data</div>
+                <div class="clay-flow__arrow">→</div>
+                <div class="clay-text-xs">Data</div>
             </div>
-            <div class="flow-box server" id="flow-response">
+            <div class="clay-flow__box clay-flow__box--server" id="flow-response">
                 🐍 Flask
             </div>
             <div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-label">HTML</div>
+                <div class="clay-flow__arrow">→</div>
+                <div class="clay-text-xs">HTML</div>
             </div>
-            <div class="flow-box browser" id="flow-render">
+            <div class="clay-flow__box clay-flow__box--browser" id="flow-render">
                 🌐 Browser
             </div>
         </div>
     </div>
 
     <!-- ─── THE EXPLANATION ─── -->
-    <div class="grid-2 mb-2">
+    <div class="clay-grid-2 clay-mb-md">
         {% for step in flow_steps %}
-        <div class="card" style="border-left: 4px solid {{ step.color }};">
-            <div style="display: flex; align-items: center; gap: 0.75rem;">
-                <span style="font-size: 2rem;">{{ step.icon }}</span>
+        <div class="clay-card clay-card--accent">
+            <div class="clay-flex clay-items-center clay-gap-md">
+                <span class="clay-stat">{{ step.icon }}</span>
                 <div>
                     <h4>Step {{ step.number }}: {{ step.title }}</h4>
-                    <p class="text-muted" style="font-size: 0.9rem;">{{ step.description }}</p>
+                    <p class="clay-text-muted clay-text-sm">{{ step.description }}</p>
                 </div>
             </div>
         </div>
@@ -80,23 +80,23 @@
     </div>
 
     <!-- ─── INTERACTIVE LIVE DEMO ─── -->
-    <div class="card mb-2" style="border-color: var(--primary);">
+    <div class="clay-card clay-card--accent clay-mb-md">
         <h3>🧪 Try It Yourself — Watch the Data Flow LIVE</h3>
-        <p class="text-muted" style="font-size: 0.9rem;">
+        <p class="clay-text-muted clay-text-sm">
             Fill out this form and click Submit. Watch what happens in the "Data Flow Trace" below.
             Every piece of data you enter will travel through the EXACT same path shown above.
         </p>
 
         <form id="data-flow-form" method="POST" action="{{ url_for('data_flow') }}">
-            <div class="grid-2" style="margin-top: 1rem;">
-                <div class="form-group">
-                    <label for="df-name">Your Name:</label>
-                    <input type="text" id="df-name" name="name" class="form-control"
+            <div class="clay-grid-2 clay-mt-md">
+                <div>
+                    <label class="clay-label" for="df-name">Your Name:</label>
+                    <input type="text" id="df-name" name="name" class="clay-input"
                            placeholder="e.g., Armaghan" required>
                 </div>
-                <div class="form-group">
-                    <label for="df-topic">Topic:</label>
-                    <select id="df-topic" name="topic" class="form-control">
+                <div>
+                    <label class="clay-label" for="df-topic">Topic:</label>
+                    <select id="df-topic" name="topic" class="clay-select">
                         <option>HTML/CSS</option>
                         <option>Flask</option>
                         <option>Databases</option>
@@ -105,12 +105,12 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="df-message">Message:</label>
-                <textarea id="df-message" name="message" class="form-control"
+            <div class="clay-mt-md">
+                <label class="clay-label" for="df-message">Message:</label>
+                <textarea id="df-message" name="message" class="clay-textarea"
                           placeholder="Write something...">Learning about data flow!</textarea>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            <button type="submit" class="clay-btn clay-btn--primary clay-btn--lg clay-btn--block clay-mt-md">
                 🚀 Submit & See the Data Flow
             </button>
         </form>
@@ -118,20 +118,20 @@
 
     {% if trace %}
     <!-- ─── DATA FLOW TRACE ─── -->
-    <div class="card mb-2" style="background: #f0e7ff; border-color: #c4b5fd;">
+    <div class="clay-card clay-card--inset clay-mb-md">
         <h3>📋 Your Submission — Complete Trace</h3>
-        <p class="text-muted" style="font-size: 0.9rem;">
+        <p class="clay-text-muted clay-text-sm">
             Here's the EXACT path your data took. Every step is documented below.
         </p>
 
-        <div style="margin-top: 1rem;">
+        <div class="clay-mt-md">
             {% for t in trace %}
-            <div class="card" style="margin-bottom: 0.75rem; border-left: 4px solid {{ t.color }};">
-                <div class="flex items-center" style="gap: 0.75rem;">
-                    <span style="font-size: 1.5rem;">{{ t.icon }}</span>
+            <div class="clay-card clay-card--accent clay-mb-sm">
+                <div class="clay-flex clay-items-center clay-gap-md">
+                    <span class="clay-stat">{{ t.icon }}</span>
                     <div>
                         <strong>{{ t.title }}</strong>
-                        <pre style="margin-top: 0.25rem; font-size: 0.8rem; padding: 0.5rem; background: #f8f8f8; color: #333;">{{ t.code }}</pre>
+                        <pre class="clay-mt-sm"><code>{{ t.code }}</code></pre>
                     </div>
                 </div>
             </div>
@@ -141,11 +141,10 @@
     {% endif %}
 
     <!-- ─── THE RAW CODE ─── -->
-    <div class="card">
+    <div class="clay-card">
         <h3>🔬 The Flask Code That Makes This Work</h3>
-        <div class="code-block-wrapper">
-            <span class="code-lang">Python (Flask Route)</span>
-            <button class="copy-btn">Copy</button>
+        <div class="clay-code-block">
+            <button class="clay-code-block__copy">Copy</button>
             <pre><code>@app.route('/data-flow', methods=['POST'])
 def data_flow_submit():
     """The FULL data flow demonstrated in one route."""
@@ -185,7 +184,7 @@ def data_flow_submit():
 <script>
 // Override the default animation to highlight the full path
 document.addEventListener('DOMContentLoaded', function() {
-    var boxes = document.querySelectorAll('.flow-box');
+    var boxes = document.querySelectorAll('.clay-flow__box');
     var current = 0;
 
     function nextStep() {

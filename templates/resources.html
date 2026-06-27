@@ -1,79 +1,79 @@
 {% extends "base.html" %}
 {% block title %}Video Resources - RAG Academy{% endblock %}
 {% block content %}
-<div class="container">
-    <div class="page-header">
+<div class="clay-container">
+    <div class="clay-text-center clay-mb-lg">
         <h1>📺 All Video & Course Resources</h1>
-        <p>Every resource linked from every lesson, aggregated here. Bookmark this page!</p>
+        <p class="clay-text-muted">Every resource linked from every lesson, aggregated here. Bookmark this page!</p>
     </div>
 
-    <div class="grid-2">
-        <div class="card">
+    <div class="clay-grid-2">
+        <div class="clay-card">
             <h3>🎥 Video Tutorials</h3>
             {% if videos %}
-            <ul style="padding-left: 1.25rem;">
+            <ul>
                 {% for r in videos %}
-                <li style="margin-bottom: 0.75rem;">
+                <li class="clay-mb-sm">
                     <strong>{{ r.name }}</strong><br>
-                    <small class="text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
+                    <small class="clay-text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="text-muted">No video resources yet.</p>
+            <p class="clay-text-muted">No video resources yet.</p>
             {% endif %}
         </div>
 
-        <div class="card">
+        <div class="clay-card">
             <h3>📚 Courses & Tutorials</h3>
             {% if courses %}
-            <ul style="padding-left: 1.25rem;">
+            <ul>
                 {% for r in courses %}
-                <li style="margin-bottom: 0.75rem;">
+                <li class="clay-mb-sm">
                     <strong>{{ r.name }}</strong><br>
-                    <small class="text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
+                    <small class="clay-text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="text-muted">No courses yet.</p>
+            <p class="clay-text-muted">No courses yet.</p>
             {% endif %}
         </div>
 
-        <div class="card">
+        <div class="clay-card">
             <h3>📖 Articles & References</h3>
             {% if articles %}
-            <ul style="padding-left: 1.25rem;">
+            <ul>
                 {% for r in articles %}
-                <li style="margin-bottom: 0.75rem;">
+                <li class="clay-mb-sm">
                     <strong>{{ r.name }}</strong><br>
-                    <small class="text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
+                    <small class="clay-text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="text-muted">No articles yet.</p>
+            <p class="clay-text-muted">No articles yet.</p>
             {% endif %}
         </div>
 
-        <div class="card">
+        <div class="clay-card">
             <h3>🛠️ Tools & Platforms</h3>
             {% if tools %}
-            <ul style="padding-left: 1.25rem;">
+            <ul>
                 {% for r in tools %}
-                <li style="margin-bottom: 0.75rem;">
+                <li class="clay-mb-sm">
                     <strong>{{ r.name }}</strong><br>
-                    <small class="text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
+                    <small class="clay-text-muted">Lesson: {{ r.lesson_title }} | {{ r.url }}</small>
                 </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p class="text-muted">No tools yet.</p>
+            <p class="clay-text-muted">No tools yet.</p>
             {% endif %}
         </div>
     </div>
 
-    <div class="card mt-2" style="background: #fef3c7;">
+    <div class="clay-card clay-card--warning clay-mt-md">
         <h3>📌 Recommended YouTube Channels</h3>
         <p>Subscribe to these for continuous learning:</p>
         <ul>
@@ -88,7 +88,7 @@
         </ul>
     </div>
 
-    <div class="card mt-2" style="background: var(--primary-light);">
+    <div class="clay-card clay-card--inset clay-mt-md">
         <h3>📌 Recommended Free Courses</h3>
         <ul>
             <li><strong>Google - Intro to Generative AI</strong> — cloud.google.com/learn (Free, 1 hr)</li>

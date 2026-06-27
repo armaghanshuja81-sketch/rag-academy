@@ -1,50 +1,50 @@
 {% extends "base.html" %}
 {% block title %}{{ lesson.title }} - RAG Academy{% endblock %}
 {% block content %}
-<div class="container">
-    <div class="lesson-header">
-        <div class="flex items-center justify-between">
+<div class="clay-container">
+    <div class="clay-lesson-header">
+        <div class="clay-flex clay-items-center clay-justify-between">
             <div>
-                <a href="{{ url_for('lessons') }}" class="btn btn-sm btn-secondary">&larr; All Lessons</a>
-                <h1 style="margin-top: 0.5rem;">{{ lesson.icon }} {{ lesson.title }}</h1>
-                <p class="text-muted">{{ lesson.desc }}</p>
+                <a href="{{ url_for('lessons') }}" class="clay-btn clay-btn--ghost clay-btn--sm">&larr; All Lessons</a>
+                <h1 class="clay-mt-md">{{ lesson.icon }} {{ lesson.title }}</h1>
+                <p class="clay-text-muted">{{ lesson.desc }}</p>
             </div>
             <div>
-                <span class="badge badge-blue">{{ lesson.module }}</span>
+                <span class="clay-badge clay-badge--primary">{{ lesson.module }}</span>
                 {% if completed %}
-                <span class="badge badge-green">Done</span>
+                <span class="clay-badge clay-badge--success">Done</span>
                 {% endif %}
             </div>
         </div>
     </div>
 
-    <div class="grid-2" style="grid-template-columns: 1.5fr 1fr;">
-        <div class="lesson-content">
+    <div class="clay-grid-2">
+        <div class="clay-lesson-content">
             {% set lesson_template = 'lessons/' + lesson.id + '.html' %}
             {% include lesson_template ignore missing %}
         </div>
 
         <div>
-            <div class="card" style="position: sticky; top: 80px;">
+            <div class="clay-card clay-lesson-sidebar">
                 <h3>Progress</h3>
                 <form action="{{ url_for('mark_complete', lesson_id=lesson.id) }}" method="POST">
-                    <button type="submit" class="btn btn-block {% if completed %}btn-success{% else %}btn-primary{% endif %}">
+                    <button type="submit" class="clay-btn clay-btn--block {% if completed %}clay-btn--success{% else %}clay-btn--primary{% endif %}">
                         {% if completed %}Completed! Click to unmark{% else %}Mark Complete{% endif %}
                     </button>
                 </form>
 
-                <hr style="margin: 1rem 0;">
-                <div class="flex" style="justify-content: space-between;">
+                <hr>
+                <div class="clay-flex clay-justify-between">
                     {% if prev_lesson %}
-                    <a href="{{ url_for('view_lesson', lesson_id=prev_lesson) }}" class="btn btn-sm btn-secondary">&larr; Previous</a>
+                    <a href="{{ url_for('view_lesson', lesson_id=prev_lesson) }}" class="clay-btn clay-btn--ghost clay-btn--sm">&larr; Previous</a>
                     {% else %}<span></span>{% endif %}
                     {% if next_lesson %}
-                    <a href="{{ url_for('view_lesson', lesson_id=next_lesson) }}" class="btn btn-sm btn-primary">Next &rarr;</a>
+                    <a href="{{ url_for('view_lesson', lesson_id=next_lesson) }}" class="clay-btn clay-btn--primary clay-btn--sm">Next &rarr;</a>
                     {% else %}<span></span>{% endif %}
                 </div>
 
-                <hr style="margin: 1rem 0;">
-                <p style="font-size: 0.85rem;">
+                <hr>
+                <p class="clay-text-sm">
                     <a href="{{ url_for('resources') }}">View All Resources &rarr;</a><br>
                     <a href="{{ url_for('python_playground') }}">Python Playground &rarr;</a>
                 </p>

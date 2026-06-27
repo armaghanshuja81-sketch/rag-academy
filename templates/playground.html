@@ -15,49 +15,49 @@
 {% block title %}Code Playground - RAG Academy{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="page-header">
+<div class="clay-container">
+    <div class="clay-text-center clay-mb-lg">
         <h1>🔧 Code Playground</h1>
-        <p>
+        <p class="clay-text-muted">
             Write HTML and CSS here and see it render live. No server needed —
             everything runs in YOUR browser. This is how frontend development works.
         </p>
     </div>
 
     <!-- ─── THE LESSON ─── -->
-    <div class="grid-2 mb-2">
-        <div class="card">
+    <div class="clay-grid-2 clay-mb-md">
+        <div class="clay-card">
             <h3>📖 How the Playground Works</h3>
-            <p style="font-size: 0.9rem;">
+            <p class="clay-text-sm">
                 The playground demonstrates a core web concept: <strong>client-side rendering</strong>.
             </p>
-            <ol style="font-size: 0.9rem; margin-top: 0.75rem; padding-left: 1.25rem;">
+            <ol class="clay-text-sm clay-mt-md">
                 <li><strong>Left panel:</strong> You write HTML in a <code>&lt;textarea&gt;</code></li>
                 <li><strong>Your browser</strong> detects every keystroke</li>
                 <li><strong>JavaScript</strong> captures the HTML and creates a Blob (a virtual file)</li>
                 <li><strong>An &lt;iframe&gt;</strong> loads that Blob as if it's a real webpage</li>
                 <li><strong>Right panel:</strong> Shows your rendered page — instantly!</li>
             </ol>
-            <div class="alert alert-info mt-2">
+            <div class="clay-alert clay-alert--info clay-mt-md">
                 <strong>Full-Stack Insight:</strong> The right panel is essentially what a browser
                 does with any HTML it receives from a server. The only difference is this HTML
                 came from YOUR keyboard, not the internet.
             </div>
         </div>
-        <div class="card">
+        <div class="clay-card">
             <h3>📝 Try These Examples</h3>
-            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                <button class="btn btn-sm btn-secondary"
+            <div class="clay-flex clay-flex-wrap clay-gap-sm">
+                <button class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="loadExample('basic')">Basic HTML Page</button>
-                <button class="btn btn-sm btn-secondary"
+                <button class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="loadExample('form')">HTML Form (see data flow)</button>
-                <button class="btn btn-sm btn-secondary"
+                <button class="clay-btn clay-btn--ghost clay-btn--sm"
                         onclick="loadExample('styled')">Styled Card</button>
             </div>
 
-            <hr style="margin: 1rem 0;">
+            <hr>
             <h4>🔑 Key Takeaway</h4>
-            <p style="font-size: 0.85rem; color: var(--text-light);">
+            <p class="clay-text-xs clay-text-muted">
                 When you visit a website, YOUR browser does exactly what this playground does:
                 it receives HTML and renders it. The only difference is the HTML source
                 (internet vs. your textarea).
@@ -66,17 +66,17 @@
     </div>
 
     <!-- ─── THE PLAYGROUND ─── -->
-    <div class="playground-layout">
+    <div class="clay-playground">
         <!-- Editor Panel -->
-        <div class="playground-editor">
-            <div class="flex items-center justify-between mb-1">
+        <div class="clay-playground__editor">
+            <div class="clay-flex clay-items-center clay-justify-between clay-mb-md">
                 <h3>✏️ Your HTML</h3>
                 <div>
-                    <button class="btn btn-sm btn-primary" onclick="runPlayground()">▶ Run</button>
-                    <button class="btn btn-sm btn-secondary" onclick="clearPlayground()">Clear</button>
+                    <button class="clay-btn clay-btn--primary clay-btn--sm" onclick="runPlayground()">▶ Run</button>
+                    <button class="clay-btn clay-btn--ghost clay-btn--sm" onclick="clearPlayground()">Clear</button>
                 </div>
             </div>
-            <textarea id="html-input" spellcheck="false"><!-- Type your HTML here -->
+            <textarea id="html-input" class="clay-textarea" spellcheck="false"><!-- Type your HTML here -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,27 +95,25 @@
         </div>
 
         <!-- Preview Panel -->
-        <div>
-            <div class="flex items-center justify-between mb-1">
+        <div class="clay-playground__output">
+            <div class="clay-flex clay-items-center clay-justify-between clay-mb-md">
                 <h3>👁️ Live Preview</h3>
-                <span class="badge badge-green">Auto-updates</span>
+                <span class="clay-badge clay-badge--success">Auto-updates</span>
             </div>
-            <div class="playground-output" id="preview-frame">
-                <div class="empty-state">
-                    <div class="icon">▶</div>
-                    <p>Write HTML and click "Run" to see the result</p>
+            <div id="preview-frame">
+                <div class="clay-text-center clay-text-muted">
+                    <p>▶ Write HTML and click "Run" to see the result</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ─── CODE EXPLANATION ─── -->
-    <div class="card mt-2">
+    <div class="clay-card clay-mt-md">
         <h3>🔬 How This Works — The Code</h3>
         <p>This playground uses <strong>zero server resources</strong>. Here's the JavaScript:</p>
-        <div class="code-block-wrapper">
-            <span class="code-lang">JavaScript</span>
-            <button class="copy-btn">Copy</button>
+        <div class="clay-code-block">
+            <button class="clay-code-block__copy">Copy</button>
             <pre><code>// Step 1: Get the HTML from textarea
 var html = document.getElementById('html-input').value;
 

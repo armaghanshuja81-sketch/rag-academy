@@ -1,38 +1,35 @@
 {% extends "base.html" %}
 {% block title %}All Lessons - RAG Academy{% endblock %}
 {% block content %}
-<div class="container">
-    <div class="page-header">
+<div class="clay-container">
+    <div class="clay-text-center clay-mb-lg">
         <h1>📚 All Lessons</h1>
-        <p>{{ total_lessons }} lessons across 11 modules. Work through them in order.</p>
+        <p class="clay-text-muted">{{ total_lessons }} lessons across 11 modules. Work through them in order.</p>
     </div>
 
     {% for module in modules %}
-    <div class="card mb-2">
-        <div class="flex items-center justify-between">
+    <div class="clay-card clay-mb-md">
+        <div class="clay-flex clay-items-center clay-justify-between">
             <div>
                 <h2>{{ module.icon }} {{ module.title }}</h2>
-                <p class="text-muted">{{ module.description }}</p>
+                <p class="clay-text-muted">{{ module.description }}</p>
             </div>
-            <div class="badge badge-blue">{{ module.lessons|length }} lessons</div>
+            <div class="clay-badge clay-badge--primary">{{ module.lessons|length }} lessons</div>
         </div>
-        <div style="margin-top: 0.75rem;">
+        <div class="clay-mt-md">
             {% for lesson in module.lessons %}
             <a href="{{ url_for('view_lesson', lesson_id=lesson.id) }}"
-               class="card lesson-card"
-               style="display: block; margin-bottom: 0.5rem; padding: 0.75rem 1rem;
-                      text-decoration: none; color: inherit;
-                      {% if lesson.completed %}border-left: 3px solid var(--success);{% endif %}">
-                <div class="flex items-center justify-between">
+               class="clay-card clay-mb-sm {% if lesson.completed %}clay-card--success{% endif %}">
+                <div class="clay-flex clay-items-center clay-justify-between">
                     <div>
                         <strong>{{ lesson.icon }} {{ lesson.title }}</strong>
-                        <p class="text-muted" style="font-size: 0.85rem; margin-top: 0.25rem;">{{ lesson.description }}</p>
+                        <p class="clay-text-muted clay-text-xs clay-mt-sm">{{ lesson.description }}</p>
                     </div>
                     <div>
                         {% if lesson.completed %}
-                        <span class="badge badge-green">✅ Done</span>
+                        <span class="clay-badge clay-badge--success">✅ Done</span>
                         {% else %}
-                        <span class="badge badge-orange">⏳ Pending</span>
+                        <span class="clay-badge clay-badge--warning">⏳ Pending</span>
                         {% endif %}
                     </div>
                 </div>
