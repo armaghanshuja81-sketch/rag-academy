@@ -7,58 +7,58 @@
 /* ─── 0. DESIGN TOKENS ─── */
 :root {
   /* Surface */
-  --clay-bg: #f5f0eb;
-  --clay-surface: #faf7f4;
-  --clay-surface-alt: #f0ebe4;
+  --clay-bg: #e9edf5;
+  --clay-surface: #f4f7fc;
+  --clay-surface-alt: #dde3ef;
 
-  /* Accent */
-  --clay-primary: #d4786e;
-  --clay-primary-dark: #b8655c;
-  --clay-primary-light: #fce8e3;
-  --clay-primary-glow: rgba(212, 120, 110, 0.25);
+  /* Accent — royal blue */
+  --clay-primary: #4361ee;
+  --clay-primary-dark: #304fcf;
+  --clay-primary-light: #e6ebfd;
+  --clay-primary-glow: rgba(67, 97, 238, 0.22);
 
   /* Semantic */
-  --clay-success: #7a9e7e;
-  --clay-success-light: #e8f3e9;
-  --clay-warning: #d4a854;
-  --clay-warning-light: #fdf6e8;
-  --clay-danger: #c4877a;
-  --clay-danger-light: #fdf0ed;
+  --clay-success: #4d9078;
+  --clay-success-light: #e8f4ef;
+  --clay-warning: #d4a040;
+  --clay-warning-light: #fdf5e6;
+  --clay-danger: #d4726a;
+  --clay-danger-light: #fdecea;
 
   /* Text */
-  --clay-text: #4a3f38;
-  --clay-text-muted: #8c8279;
-  --clay-text-inverse: #faf7f4;
+  --clay-text: #1a2133;
+  --clay-text-muted: #5a688a;
+  --clay-text-inverse: #f4f7fc;
 
-  /* Shadows — the defining clay feature */
+  /* Shadows — blue-tinted for navy palette */
   --clay-shadow-sm:
-    8px 8px 16px rgba(174, 164, 148, 0.25),
-    -4px -4px 8px rgba(255, 252, 248, 0.8);
+    8px 8px 16px rgba(50, 60, 90, 0.15),
+    -4px -4px 8px rgba(255, 255, 255, 0.7);
   --clay-shadow-md:
-    12px 12px 24px rgba(174, 164, 148, 0.3),
-    -6px -6px 12px rgba(255, 252, 248, 0.9);
+    12px 12px 24px rgba(50, 60, 90, 0.18),
+    -6px -6px 12px rgba(255, 255, 255, 0.85);
   --clay-shadow-lg:
-    20px 20px 40px rgba(174, 164, 148, 0.35),
-    -8px -8px 16px rgba(255, 252, 248, 0.95);
+    20px 20px 40px rgba(50, 60, 90, 0.22),
+    -8px -8px 16px rgba(255, 255, 255, 0.9);
   --clay-shadow-xl:
-    28px 28px 56px rgba(174, 164, 148, 0.4),
-    -10px -10px 20px rgba(255, 252, 248, 1);
+    28px 28px 56px rgba(50, 60, 90, 0.26),
+    -10px -10px 20px rgba(255, 255, 255, 1);
 
   /* Inset (pressed/depressed) */
   --clay-shadow-inset:
-    inset 4px 4px 8px rgba(174, 164, 148, 0.15),
-    inset -2px -2px 4px rgba(255, 252, 248, 0.7);
+    inset 4px 4px 8px rgba(50, 60, 90, 0.08),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.6);
   --clay-shadow-inset-deep:
-    inset 6px 6px 12px rgba(174, 164, 148, 0.2),
-    inset -3px -3px 6px rgba(255, 252, 248, 0.8);
+    inset 6px 6px 12px rgba(50, 60, 90, 0.12),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.7);
 
   /* Button specific */
   --clay-shadow-button:
-    5px 5px 10px rgba(174, 164, 148, 0.3),
-    -2px -2px 5px rgba(255, 252, 248, 0.6);
+    4px 4px 8px rgba(50, 60, 90, 0.2),
+    -2px -2px 4px rgba(255, 255, 255, 0.55);
   --clay-shadow-button-pressed:
-    inset 3px 3px 6px rgba(174, 164, 148, 0.25),
-    inset -1px -1px 2px rgba(255, 252, 248, 0.3);
+    inset 3px 3px 6px rgba(50, 60, 90, 0.18),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.3);
 
   /* Radii */
   --clay-radius-sm: 12px;
@@ -105,8 +105,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(212, 120, 110, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(174, 164, 148, 0.08) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 0%, rgba(67, 97, 238, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(50, 60, 90, 0.05) 0%, transparent 60%);
 }
 
 /* ─── 2. TYPOGRAPHY ─── */
@@ -229,8 +229,8 @@ blockquote {
 .clay-btn:hover {
   transform: translateY(-2px);
   box-shadow:
-    7px 7px 14px rgba(174, 164, 148, 0.35),
-    -3px -3px 7px rgba(255, 252, 248, 0.7);
+    7px 7px 14px rgba(50, 60, 90, 0.22),
+    -3px -3px 7px rgba(255, 255, 255, 0.65);
   color: var(--clay-text);
 }
 .clay-btn:active {
@@ -242,23 +242,23 @@ blockquote {
   background: var(--clay-primary);
   color: var(--clay-text-inverse);
   box-shadow:
-    5px 5px 10px rgba(212, 120, 110, 0.35),
-    -2px -2px 5px rgba(255, 252, 248, 0.5);
+    5px 5px 10px rgba(67, 97, 238, 0.35),
+    -2px -2px 5px rgba(255, 255, 255, 0.45);
 }
 .clay-btn--primary:hover {
   background: var(--clay-primary-dark);
   color: var(--clay-text-inverse);
   box-shadow:
-    7px 7px 14px rgba(212, 120, 110, 0.45),
-    -3px -3px 7px rgba(255, 252, 248, 0.6);
+    7px 7px 14px rgba(67, 97, 238, 0.45),
+    -3px -3px 7px rgba(255, 255, 255, 0.55);
 }
 
 .clay-btn--success {
   background: var(--clay-success);
   color: white;
   box-shadow:
-    5px 5px 10px rgba(122, 158, 126, 0.35),
-    -2px -2px 5px rgba(255, 252, 248, 0.5);
+    5px 5px 10px rgba(77, 144, 120, 0.35),
+    -2px -2px 5px rgba(255, 255, 255, 0.5);
 }
 .clay-btn--success:hover { background: #5c8a60; color: white; }
 
@@ -314,8 +314,8 @@ blockquote {
 .clay-textarea:focus {
   outline: none;
   box-shadow:
-    inset 4px 4px 8px rgba(174, 164, 148, 0.2),
-    inset -2px -2px 4px rgba(255, 252, 248, 0.8),
+    inset 4px 4px 8px rgba(50, 60, 90, 0.1),
+    inset -2px -2px 4px rgba(255, 255, 255, 0.65),
     0 0 0 3px var(--clay-primary-light);
 }
 .clay-textarea {
@@ -370,13 +370,13 @@ blockquote {
 
 /* ── 3f. Navbar ── */
 .clay-nav {
-  background: rgba(250, 247, 244, 0.88);
+  background: rgba(244, 247, 252, 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: none;
   box-shadow:
-    0 4px 20px rgba(174, 164, 148, 0.12),
-    0 -1px 0 rgba(255, 252, 248, 0.5) inset;
+    0 4px 20px rgba(50, 60, 90, 0.08),
+    0 -1px 0 rgba(255, 255, 255, 0.5) inset;
   border-radius: 0 0 var(--clay-radius-lg) var(--clay-radius-lg);
   padding: 0 2rem;
   position: sticky;
@@ -449,8 +449,8 @@ blockquote {
 .clay-theme-toggle:hover {
   transform: scale(1.1);
   box-shadow:
-    6px 6px 12px rgba(174, 164, 148, 0.3),
-    -3px -3px 6px rgba(255, 252, 248, 0.6);
+    6px 6px 12px rgba(50, 60, 90, 0.2),
+    -3px -3px 6px rgba(255, 255, 255, 0.55);
 }
 .clay-theme-toggle:active {
   transform: scale(0.95);
@@ -529,7 +529,7 @@ blockquote {
 }
 .clay-tier--junior { border-left: 4px solid #7a9e7e; }
 .clay-tier--mid { border-left: 4px solid #d4a854; }
-.clay-tier--senior { border-left: 4px solid #d4786e; }
+.clay-tier--senior { border-left: 4px solid var(--clay-primary); }
 .clay-tier--expert { border-left: 4px solid #9b7ec4; }
 .clay-tier--bonus { border-left: 4px solid #6ba3b8; }
 
@@ -577,6 +577,53 @@ blockquote {
 .clay-mb-xl { margin-bottom: 2rem; }
 
 .clay-w-full { width: 100%; }
+
+.clay-relative { position: relative; z-index: 1; }
+.clay-flex-col { flex-direction: column; }
+.clay-align-start { align-items: flex-start; }
+.clay-align-stretch { align-items: stretch; }
+
+.clay-icon-lg { font-size: 1.5rem; line-height: 1; }
+.clay-icon-xl { font-size: 2rem; line-height: 1; }
+.clay-icon-2xl { font-size: 2.5rem; line-height: 1; }
+
+.clay-search-input { max-width: 320px; }
+.clay-code-editor {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.clay-pre-output {
+  background: transparent;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* Sidebar grid layout for lesson view */
+.clay-lesson-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* Trace step cards in DataFlow */
+.clay-trace-card {
+  border-left-width: 4px;
+  border-left-style: solid;
+  transition: opacity 0.4s ease;
+}
+.clay-trace-card--pending { opacity: 0.4; }
+.clay-trace-card--active { opacity: 1; }
+
+/* No-click variant for alerts */
+.clay-alert--static { cursor: default; }
+
+/* Content min-height for main area */
+.clay-main { min-height: calc(100vh - 64px - 100px); }
 
 /* ── 5. PAGE-SPECIFIC STYLES ── */
 
@@ -748,7 +795,135 @@ blockquote {
   box-shadow: var(--clay-shadow-sm);
 }
 
-/* ── 5g. Module card ── */
+/* ── 5g. Quiz ── */
+.clay-quiz {
+  max-width: 720px;
+}
+
+.clay-quiz__header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--clay-surface-alt);
+}
+
+.clay-quiz__question {
+  background: var(--clay-surface);
+  border-radius: var(--clay-radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--clay-shadow-sm);
+}
+
+.clay-quiz__question-text {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--clay-text);
+}
+
+.clay-quiz__number {
+  color: var(--clay-primary);
+  font-family: var(--font-display);
+  font-size: 1.1em;
+}
+
+.clay-quiz__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.clay-quiz__option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: var(--clay-radius);
+  background: var(--clay-bg);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--clay-text);
+  text-align: left;
+  box-shadow: var(--clay-shadow-button);
+  transition: all 0.15s var(--ease-smooth);
+}
+
+.clay-quiz__option:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--clay-shadow-md);
+}
+
+.clay-quiz__option:active {
+  transform: translateY(1px);
+  box-shadow: var(--clay-shadow-button-pressed);
+}
+
+.clay-quiz__option--selected {
+  background: var(--clay-primary-light);
+  color: var(--clay-primary-dark);
+  box-shadow: var(--clay-shadow-inset);
+  font-weight: 600;
+}
+
+.clay-quiz__option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--clay-surface);
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--clay-text-muted);
+  flex-shrink: 0;
+}
+
+.clay-quiz__option--selected .clay-quiz__option-letter {
+  background: var(--clay-primary);
+  color: white;
+}
+
+.clay-quiz__result {
+  text-align: center;
+  padding: 2rem;
+  border-radius: var(--clay-radius-md);
+}
+
+.clay-quiz__result--pass {
+  background: var(--clay-success-light);
+  box-shadow: var(--clay-shadow-md);
+}
+
+.clay-quiz__result--fail {
+  background: var(--clay-warning-light);
+  box-shadow: var(--clay-shadow-md);
+}
+
+.clay-quiz__result-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.clay-quiz__review {
+  padding: 0.75rem 1rem;
+  border-radius: var(--clay-radius);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.clay-quiz__review--correct {
+  background: var(--clay-success-light);
+  border-left: 3px solid var(--clay-success);
+}
+
+.clay-quiz__review--wrong {
+  background: var(--clay-danger-light);
+  border-left: 3px solid var(--clay-danger);
+}
+
+/* ── 5h. Module card ── */
 .clay-module {
   position: relative;
   overflow: hidden;
@@ -757,7 +932,7 @@ blockquote {
   font-family: var(--font-display);
   font-size: 3.5rem;
   font-weight: 800;
-  color: rgba(212, 120, 110, 0.06);
+  color: rgba(67, 97, 238, 0.06);
   position: absolute;
   top: 0.25rem;
   right: 1rem;
@@ -834,71 +1009,71 @@ blockquote {
 /* Pulse for active states */
 @keyframes clayPulse {
   0%, 100% { box-shadow: 0 0 0 0 var(--clay-primary-glow); }
-  50% { box-shadow: 0 0 0 8px rgba(212, 120, 110, 0); }
+  50% { box-shadow: 0 0 0 8px rgba(67, 97, 238, 0); }
 }
 
 /* ── 7. DARK MODE ── */
 [data-theme="dark"] {
-  --clay-bg: #2c2825;
-  --clay-surface: #35312d;
-  --clay-surface-alt: #3d3834;
-  --clay-text: #e8e0d5;
-  --clay-text-muted: #a09890;
-  --clay-primary: #e89286;
-  --clay-primary-dark: #f0a89e;
-  --clay-primary-light: #3a2522;
-  --clay-primary-glow: rgba(232, 146, 134, 0.2);
-  --clay-success: #8db891;
-  --clay-success-light: #253028;
+  --clay-bg: #0f1729;
+  --clay-surface: #162032;
+  --clay-surface-alt: #1d2a40;
+  --clay-text: #e2e8f0;
+  --clay-text-muted: #8b9dc0;
+  --clay-primary: #6b8cff;
+  --clay-primary-dark: #8faaff;
+  --clay-primary-light: #1a2340;
+  --clay-primary-glow: rgba(107, 140, 255, 0.18);
+  --clay-success: #6aaf83;
+  --clay-success-light: #1a2a20;
   --clay-warning: #e0b85c;
-  --clay-warning-light: #353020;
-  --clay-danger: #d49588;
-  --clay-danger-light: #352522;
+  --clay-warning-light: #2a2418;
+  --clay-danger: #e08880;
+  --clay-danger-light: #2a1e1c;
 
   --clay-shadow-sm:
-    8px 8px 16px rgba(20, 18, 16, 0.5),
-    -4px -4px 8px rgba(70, 65, 60, 0.15);
+    8px 8px 16px rgba(4, 6, 14, 0.55),
+    -4px -4px 8px rgba(40, 50, 70, 0.2);
   --clay-shadow-md:
-    12px 12px 24px rgba(20, 18, 16, 0.55),
-    -6px -6px 12px rgba(70, 65, 60, 0.2);
+    12px 12px 24px rgba(4, 6, 14, 0.6),
+    -6px -6px 12px rgba(40, 50, 70, 0.25);
   --clay-shadow-lg:
-    20px 20px 40px rgba(20, 18, 16, 0.6),
-    -8px -8px 16px rgba(70, 65, 60, 0.25);
+    20px 20px 40px rgba(4, 6, 14, 0.65),
+    -8px -8px 16px rgba(40, 50, 70, 0.3);
   --clay-shadow-xl:
-    28px 28px 56px rgba(20, 18, 16, 0.65),
-    -10px -10px 20px rgba(70, 65, 60, 0.3);
+    28px 28px 56px rgba(4, 6, 14, 0.7),
+    -10px -10px 20px rgba(40, 50, 70, 0.35);
   --clay-shadow-inset:
-    inset 4px 4px 8px rgba(20, 18, 16, 0.35),
-    inset -2px -2px 4px rgba(70, 65, 60, 0.1);
+    inset 4px 4px 8px rgba(4, 6, 14, 0.4),
+    inset -2px -2px 4px rgba(40, 50, 70, 0.15);
   --clay-shadow-inset-deep:
-    inset 6px 6px 12px rgba(20, 18, 16, 0.4),
-    inset -3px -3px 6px rgba(70, 65, 60, 0.12);
+    inset 6px 6px 12px rgba(4, 6, 14, 0.45),
+    inset -3px -3px 6px rgba(40, 50, 70, 0.18);
   --clay-shadow-button:
-    5px 5px 10px rgba(20, 18, 16, 0.5),
-    -2px -2px 5px rgba(70, 65, 60, 0.15);
+    5px 5px 10px rgba(4, 6, 14, 0.55),
+    -2px -2px 5px rgba(40, 50, 70, 0.2);
   --clay-shadow-button-pressed:
-    inset 3px 3px 6px rgba(20, 18, 16, 0.45),
-    inset -1px -1px 2px rgba(70, 65, 60, 0.08);
+    inset 3px 3px 6px rgba(4, 6, 14, 0.5),
+    inset -1px -1px 2px rgba(40, 50, 70, 0.1);
 
   background-image:
-    radial-gradient(ellipse at 20% 0%, rgba(232, 146, 134, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(70, 65, 60, 0.08) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 0%, rgba(107, 140, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(50, 60, 90, 0.08) 0%, transparent 50%);
 }
 
 [data-theme="dark"] .clay-nav {
-  background: rgba(53, 49, 45, 0.88);
+  background: rgba(22, 32, 50, 0.9);
   box-shadow:
-    0 4px 20px rgba(20, 18, 16, 0.3),
-    0 -1px 0 rgba(70, 65, 60, 0.3) inset;
+    0 4px 20px rgba(4, 6, 14, 0.35),
+    0 -1px 0 rgba(40, 50, 70, 0.3) inset;
 }
 
 [data-theme="dark"] pre {
-  background: #1a1816;
-  color: #e8e0d5;
+  background: #0a0f1a;
+  color: #e2e8f0;
 }
 
 [data-theme="dark"] .clay-playground__editor textarea {
-  background: #1a1816;
+  background: #0a0f1a;
 }
 
 [data-theme="dark"] .clay-hero h1 {

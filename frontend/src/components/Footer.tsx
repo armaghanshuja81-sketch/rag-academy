@@ -6,5 +6,5 @@ export default function Footer() {
         Built with ❤️ | Open-source & free forever
       </p>
     </footer>
-  );
+  )
 }

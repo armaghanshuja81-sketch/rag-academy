@@ -1,22 +1,22 @@
 import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar.jsx'
-import Footer from './components/Footer.jsx'
-import Home from './pages/Home.jsx'
-import Lessons from './pages/Lessons.jsx'
-import LessonView from './pages/LessonView.jsx'
-import Roadmap from './pages/Roadmap.jsx'
-import Playground from './pages/Playground.jsx'
-import DatabaseViewer from './pages/DatabaseViewer.jsx'
-import DataFlow from './pages/DataFlow.jsx'
-import RagDemo from './pages/RagDemo.jsx'
-import Resources from './pages/Resources.jsx'
-import NotFound from './pages/NotFound.jsx'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Home from './pages/Home'
+import Lessons from './pages/Lessons'
+import LessonView from './pages/LessonView'
+import Roadmap from './pages/Roadmap'
+import Playground from './pages/Playground'
+import DatabaseViewer from './pages/DatabaseViewer'
+import DataFlow from './pages/DataFlow'
+import RagDemo from './pages/RagDemo'
+import Resources from './pages/Resources'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
     <>
       <Navbar />
-      <main className="clay-container" style={{ minHeight: 'calc(100vh - 64px - 100px)' }}>
+      <main className="clay-container clay-main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/lessons" element={<Lessons />} />

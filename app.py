@@ -16,6 +16,7 @@ from lessons_data import (
 )
 from rag_engine import SimpleRAGEngine
 from python_runner import run_python_code
+from quiz_data import get_quiz, check_answers
 
 app = Flask(__name__)
 app.secret_key = 'rag-academy-secret-2026'
@@ -368,13 +369,27 @@ def api_lesson(lesson_id):
         return jsonify({'error': 'Lesson not found'}), 404
     completed = get_completed_ids()
     prev_lesson, next_lesson = get_prev_next(lesson_id)
-    return jsonify({
-        'lesson': lesson,
+
+    # Load lesson HTML content
+    content_html = ''
+    content_path = os.path.join(app.root_path, 'templates', 'lessons', f'{lesson_id}.html')
+    if os.path.isfile(content_path):
+        try:
+            with open(content_path, 'r', encoding='utf-8') as f:
+                content_html = f.read().strip()
+        except Exception:
+            content_html = ''
+
+    response = {
+        'lesson': dict(lesson),
         'completed': lesson_id in completed,
         'prev_lesson': prev_lesson,
         'next_lesson': next_lesson,
-        'tier': lesson.get('tier', '')
-    })
+        'tier': lesson.get('tier', ''),
+    }
+    if content_html:
+        response['lesson']['content_html'] = content_html
+    return jsonify(response)
 
 @app.route('/api/roadmap')
 def api_roadmap():
@@ -477,6 +492,57 @@ def api_rag_recent():
     recent_queries = [dict(r) for r in recent]
     conn.close()
     return jsonify(recent_queries)
+
+# ═══════════════════════════════════════════════════
+# QUIZ API
+# ═══════════════════════════════════════════════════
+
+@app.route('/api/lesson/<lesson_id>/quiz')
+def api_quiz_get(lesson_id):
+    """Return quiz questions for a lesson (without correct answers)."""
+    questions = get_quiz(lesson_id)
+    if not questions:
+        return jsonify({"questions": [], "has_quiz": False})
+    # Strip correct answers before sending to client
+    safe = [
+        {k: v for k, v in q.items() if k != "correct"}
+        for q in questions
+    ]
+    return jsonify({"questions": safe, "has_quiz": True, "total": len(safe)})
+
+
+@app.route('/api/lesson/<lesson_id>/quiz/submit', methods=['POST'])
+def api_quiz_submit(lesson_id):
+    """Check quiz answers. Auto-mark lesson complete if passed."""
+    data = request.get_json()
+    answers = data.get('answers', [])
+    if not isinstance(answers, list):
+        return jsonify({"error": "answers must be an array of integers"}), 400
+
+    result = check_answers(lesson_id, answers)
+    if "error" in result:
+        return jsonify(result), 400
+
+    # Auto-mark complete if passed
+    if result["passed"]:
+        conn = get_db()
+        existing = conn.execute(
+            "SELECT * FROM lesson_progress WHERE lesson_id = ?", (lesson_id,)
+        ).fetchone()
+        if existing:
+            conn.execute(
+                "UPDATE lesson_progress SET completed = 1 WHERE lesson_id = ?", (lesson_id,)
+            )
+        else:
+            conn.execute(
+                "INSERT INTO lesson_progress (lesson_id, completed) VALUES (?, 1)", (lesson_id,)
+            )
+        conn.commit()
+        conn.close()
+        result["auto_completed"] = True
+
+    return jsonify(result)
+
 
 @app.errorhandler(404)
 def not_found(e):
