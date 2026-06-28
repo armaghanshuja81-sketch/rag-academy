@@ -34,3 +34,6 @@ chroma_data/
 
 # Temp
 backups/
+
+# Worktrees
+.worktrees/
