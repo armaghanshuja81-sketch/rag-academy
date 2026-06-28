@@ -69,7 +69,7 @@ export default function Quiz({ lessonId, onPass }: Props) {
   }
 
   if (result) {
-    return <QuizResultCard result={result} onRetry={handleRetry} />
+    return <QuizResultCard result={result} quiz={quiz} onRetry={handleRetry} />
   }
 
   const allAnswered = selected.every(s => s !== -1)
@@ -116,7 +116,7 @@ export default function Quiz({ lessonId, onPass }: Props) {
   )
 }
 
-function QuizResultCard({ result, onRetry }: { result: QuizResult; onRetry: () => void }) {
+function QuizResultCard({ result, quiz, onRetry }: { result: QuizResult; quiz: QuizData; onRetry: () => void }) {
   return (
     <div className="clay-quiz clay-mt-lg">
       <div className={`clay-quiz__result ${result.passed ? 'clay-quiz__result--pass' : 'clay-quiz__result--fail'}`}>
@@ -134,15 +134,34 @@ function QuizResultCard({ result, onRetry }: { result: QuizResult; onRetry: () =
 
       <div className="clay-mt-md">
         <h4 className="clay-mb-sm">Review</h4>
-        {result.results.map((item: QuizResultItem, i: number) => (
-          <div key={i} className={`clay-quiz__review ${item.is_correct ? 'clay-quiz__review--correct' : 'clay-quiz__review--wrong'}`}>
-            <div className="clay-flex clay-items-center clay-gap-sm">
-              <span>{item.is_correct ? '✓' : '✗'}</span>
-              <strong>{i + 1}. {item.question}</strong>
+        {result.results.map((item: QuizResultItem, i: number) => {
+          const question = quiz.questions[i]
+          return (
+            <div key={i} className="clay-quiz__question">
+              <p className="clay-quiz__question-text">
+                <span className="clay-quiz__number">{i + 1}.</span> {item.question}
+              </p>
+              <div className="clay-quiz__options">
+                {question.options.map((opt, optIdx) => {
+                  const isUserChoice = optIdx === item.selected
+                  const isCorrectAnswer = optIdx === item.correct_answer
+                  let optClass = 'clay-quiz__option'
+                  if (isUserChoice && item.is_correct) optClass += ' clay-quiz__option--correct'
+                  else if (isUserChoice && !item.is_correct) optClass += ' clay-quiz__option--incorrect'
+                  else if (isCorrectAnswer && !item.is_correct) optClass += ' clay-quiz__option--correct'
+                  return (
+                    <div key={optIdx} className={optClass}>
+                      <span className="clay-quiz__option-letter">{String.fromCharCode(65 + optIdx)}</span>
+                      {opt}
+                      {isUserChoice && <span className="clay-quiz__option-icon">{item.is_correct ? '✓' : '✗'}</span>}
+                    </div>
+                  )
+                })}
+              </div>
+              <p className="clay-text-sm clay-text-muted clay-mt-sm">{item.explanation}</p>
             </div>
-            <p className="clay-text-sm clay-text-muted">{item.explanation}</p>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       {!result.passed && (
@@ -158,14 +177,14 @@ function QuizSkeleton() {
   return (
     <div className="clay-quiz clay-mt-lg">
       <div className="clay-quiz__header">
-        <div style={{ height: '1.5rem', width: '12rem', background: 'var(--clay-surface-alt)', borderRadius: 'var(--clay-radius-sm)' }} />
-        <div className="clay-mt-sm" style={{ height: '0.85rem', width: '16rem', background: 'var(--clay-surface-alt)', borderRadius: 'var(--clay-radius-sm)' }} />
+        <div style={{ height: '1.5rem', width: '12rem', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)' }} />
+        <div className="clay-mt-sm" style={{ height: '0.85rem', width: '16rem', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)' }} />
       </div>
       {[1, 2, 3].map(i => (
         <div key={i} className="clay-quiz__question">
-          <div style={{ height: '1rem', width: '80%', background: 'var(--clay-surface-alt)', borderRadius: 'var(--clay-radius-sm)', marginBottom: '0.75rem' }} />
+          <div style={{ height: '1rem', width: '80%', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)', marginBottom: '0.75rem' }} />
           {[1, 2, 3, 4].map(j => (
-            <div key={j} className="clay-mb-sm" style={{ height: '2.5rem', background: 'var(--clay-surface-alt)', borderRadius: 'var(--clay-radius-sm)' }} />
+            <div key={j} className="clay-mb-sm" style={{ height: '2.5rem', background: 'var(--surface-alt)', borderRadius: 'var(--radius-sm)' }} />
           ))}
         </div>
       ))}

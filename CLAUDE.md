@@ -2,6 +2,16 @@
 
 Interactive RAG learning platform — 108 lessons across 5 tiers (Junior → Mid → Senior → Expert → Bonus) with a spiral curriculum where every tier revisits every topic at increasing depth.
 
+## Active Migration
+
+**Current phase**: Audit complete → awaiting approval to start Phase 0 (Retokenize)
+
+- **Plan**: `implementation-plan.md` (root of repo) — full spec with phases, rules, per-component specs
+- **Progress**: `.progress.md` — checklist tracking what's done/pending
+- **Audit**: `.audit-report.md` — Phase -1 findings (tokens, hardcoded values, clay tells, a11y issues)
+
+**Rule**: Stop after each phase and wait for user review. Do not proceed automatically.
+
 ## Architecture
 
 ```

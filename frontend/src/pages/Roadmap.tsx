@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { getRoadmapData } from '../lib/api'
 import type { RoadmapTier } from '../types'
 
-const TIER_ICONS: Record<string, string> = { junior: '🌱', mid: '🌿', senior: '🌳', expert: '🏔️', bonus: '⭐' }
 const TIER_LABELS: Record<string, string> = { junior: 'Junior', mid: 'Mid', senior: 'Senior', expert: 'Expert', bonus: 'Bonus' }
 
 export default function Roadmap() {
@@ -42,10 +41,8 @@ export default function Roadmap() {
               className={`clay-card clay-tier clay-tier--${tierId}`}
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              <div className="clay-tier__icon">{tier.icon || TIER_ICONS[tierId] || '📘'}</div>
               <div className="clay-tier__label">{TIER_LABELS[tierId] || tierId}</div>
-              <h3>{tier.title || tier.name || tierId}</h3>
-              <p className="clay-text-sm clay-text-muted clay-mt-sm">{tier.description}</p>
+              <p className="clay-text-sm clay-text-muted">{tier.description}</p>
               <div className="clay-flex clay-items-center clay-justify-between clay-mt-md">
                 <span className="clay-badge clay-badge--neutral">
                   {typeof lessonCount === 'number' ? `${lessonCount} lessons` : lessonCount}
@@ -69,8 +66,7 @@ export default function Roadmap() {
                 className={`clay-card clay-card--sm clay-tier clay-tier--${key}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <div className="clay-tier__icon">{TIER_ICONS[key]}</div>
-                <h4>{label}</h4>
+                <div className="clay-tier__label">{label}</div>
               </Link>
             ))}
           </div>

@@ -73,14 +73,12 @@ export default function Home() {
             const tpPercent = tp.total > 0 ? Math.round((tp.done / tp.total) * 100) : 0
             return (
               <div key={tier} className={`clay-card clay-card--sm clay-tier clay-tier--${tier}`}>
-                <div className="text-capitalize clay-tier__label">{tier}</div>
+                <div className="clay-tier__label">{tier}</div>
                 <div className="clay-stat">{tpPercent}%</div>
-                <div className="clay-progress clay-mt-sm">
+                <div className="clay-progress">
                   <div className="clay-progress__fill" style={{ width: `${tpPercent}%` }} />
                 </div>
-                <p className="clay-text-xs clay-text-muted clay-mt-sm">
-                  {tp.done} / {tp.total} lessons
-                </p>
+                <div className="clay-tier__count">{tp.done} of {tp.total} lessons complete</div>
               </div>
             )
           })}

@@ -27,7 +27,7 @@ export default function LessonView() {
   if (error) return <div className="clay-alert clay-alert--error clay-alert--static">{error}</div>
   if (!data) return <div className="clay-alert clay-alert--warning clay-alert--static">Lesson not found.</div>
 
-  const { lesson, prev_lesson, next_lesson, tier } = data
+  const { lesson, prev_lesson, next_lesson, tier, has_content } = data
 
   return (
     <div className="clay-reveal">
@@ -49,27 +49,28 @@ export default function LessonView() {
 
       <div className="clay-lesson-layout">
         <div className="clay-lesson-content">
-          {lesson.content_html ? (
+          {has_content && lesson.content_html ? (
             <div dangerouslySetInnerHTML={{ __html: lesson.content_html }} />
           ) : (
-            <div className="clay-card">
+            <div className="clay-card clay-card--inset clay-text-center" style={{ padding: '3rem 2rem' }}>
+              <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem', opacity: 0.6 }}>Soon</div>
               <h2>{lesson.title}</h2>
-              <p className="clay-text-muted clay-mt-sm">{lesson.description}</p>
-              {lesson.objectives && (
-                <div className="clay-mt-md">
-                  <h4>Learning Objectives</h4>
-                  <ul>
+              <p className="clay-text-muted clay-mt-sm">{lesson.description || 'This lesson is under development.'}</p>
+              {lesson.objectives && lesson.objectives.length > 0 && (
+                <div className="clay-mt-md" style={{ textAlign: 'left', maxWidth: '32rem', margin: '1.5rem auto 0' }}>
+                  <h4>What you'll learn</h4>
+                  <ul className="clay-mt-sm">
                     {lesson.objectives.map((obj, i) => <li key={i}>{obj}</li>)}
                   </ul>
                 </div>
               )}
-              <div className="clay-alert clay-alert--info clay-alert--static clay-mt-md">
-                Lesson content coming soon.
+              <div className="clay-alert clay-alert--info clay-alert--static clay-mt-lg">
+                This lesson is coming soon. Check back as we continue building the curriculum.
               </div>
             </div>
           )}
 
-          {id && <Quiz lessonId={id} onPass={() => setIsComplete(true)} />}
+          {has_content && id && <Quiz lessonId={id} onPass={() => setIsComplete(true)} />}
         </div>
 
         <div className="clay-lesson-sidebar">

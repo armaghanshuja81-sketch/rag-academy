@@ -37,6 +37,7 @@ export interface LessonApiResponse {
   prev_lesson: { id: string; title: string } | null
   next_lesson: { id: string; title: string } | null
   tier: string
+  has_content: boolean
 }
 
 export interface RoadmapTier {
